@@ -1,7 +1,7 @@
 package src;
 import java.util.Calendar;
 
-public class Date {
+public class Date implements Comparable<Date> {
     private int year;
     private int month;
     private int day;
@@ -20,6 +20,53 @@ public class Date {
         year = Integer.parseInt(list[Constants.YEAR]);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Date) {
+            Date date = (Date)obj;
+            if(year == date.year && day == date.day && month == date.month) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public int compareTo(Date date) {
+        // If the dates are equal
+        if(year == date.year && day == date.day && month == date.month) {
+            return Constants.EQUALS;
+        }
+
+        // Same year
+        if(date.year > year) {
+            return Constants.LESSER;
+        }
+        else if(date.year < year) {
+            return Constants.GREATER;
+        }
+        else {
+            // Same date
+            if(date.month > month) {
+                return Constants.LESSER;
+            }
+            else if(date.month < month) {
+                return Constants.GREATER;
+            }
+            else {
+                if(date.day > day) {
+                    return Constants.LESSER;
+                }
+                else {
+                    return Constants.GREATER;
+                }
+            }
+        }
+    }
+    @Override
+    public String toString() {
+        return (month + "/" + day + "/" + year);
+    }
     public boolean isValid() {
         Calendar calendar = Calendar.getInstance();
         // Check if input date is possible based on common sense
@@ -77,10 +124,5 @@ public class Date {
             return false;
         }
     }
-//    public void print() {
-//        System.out.println(month + "/" + day + "/" + year);
-//        System.out.println(isValid());
-//    }
-
 
 }

@@ -7,8 +7,8 @@ public enum Major {
     ITI ("04:547", "SC&I"),
     BAIT ("33:136", "RBS");
 
-    private final String code;
-    private final String school;
+    public final String code;
+    public final String school;
     Major(String code, String school) {
         this.code = code;
         this.school = school;
