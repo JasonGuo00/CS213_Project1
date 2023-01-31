@@ -13,16 +13,24 @@ public class Profile implements Comparable<Profile>{
     }
     @Override
     public int compareTo(Profile prof) {
-        String prof1 = fname + " " + lname + " " + dob.toString();
-        String prof2 = prof.fname + " " + prof.lname + " " + prof.dob.toString();
-        if(prof1.compareTo(prof2) <= Constants.LESSER) {
+        if(lname.compareTo(prof.lname) < Constants.EQUALS) {
             return Constants.LESSER;
         }
-        else if(prof1.compareTo(prof2) >= Constants.GREATER) {
+        else if(lname.compareTo(prof.lname) > Constants.EQUALS) {
             return Constants.GREATER;
         }
+        // Same last name
         else {
-           return Constants.EQUALS;
+            if(fname.compareTo(prof.fname) < Constants.EQUALS) {
+                return Constants.LESSER;
+            }
+            else if(fname.compareTo(prof.fname) > Constants.EQUALS) {
+                return Constants.GREATER;
+            }
+            // Same first and last name, result depends only on dob
+            else {
+                return dob.compareTo(prof.dob);
+            }
         }
     }
 
