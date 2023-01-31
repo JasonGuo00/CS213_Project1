@@ -4,6 +4,13 @@ public class Student implements Comparable<Student>{
     private Profile profile;
     private Major major;
     private int creditCompleted;
+
+    public Student(Profile profile, Major major, int creditCompleted) {
+        this.profile = profile;
+        this.major = major;
+        this.creditCompleted = creditCompleted;
+    }
+
     @Override
     public int compareTo(Student student) {
         Profile student1 = profile;
@@ -13,7 +20,7 @@ public class Student implements Comparable<Student>{
 
     @Override
     public String toString() {
-        return (profile.toString() + " " + major.code + " " + major + " " + major.code + " " + creditCompleted);
+        return (profile.toString() + " (" + major.code + " " + major + " " + major.school + ") credits completed: " + creditCompleted);
     }
 
     @Override

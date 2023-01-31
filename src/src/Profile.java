@@ -15,7 +15,15 @@ public class Profile implements Comparable<Profile>{
     public int compareTo(Profile prof) {
         String prof1 = fname + " " + lname + " " + dob.toString();
         String prof2 = prof.fname + " " + prof.lname + " " + prof.dob.toString();
-        return (prof1.compareTo(prof2));
+        if(prof1.compareTo(prof2) <= Constants.LESSER) {
+            return Constants.LESSER;
+        }
+        else if(prof1.compareTo(prof2) >= Constants.GREATER) {
+            return Constants.GREATER;
+        }
+        else {
+           return Constants.EQUALS;
+        }
     }
 
     @Override
