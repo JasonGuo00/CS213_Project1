@@ -42,7 +42,7 @@ public class Student implements Comparable<Student>{
 
     @Override
     public String toString() {
-        return (profile.toString() + " (" + major.code + " " + major + " " + major.school + ") credits completed: " + creditCompleted);
+        return (profile.toString() + " (" + major.code + " " + major + " " + major.school + ") credits completed: " + creditCompleted + " (" + getSeniority() + ")");
     }
 
     @Override

@@ -68,6 +68,6 @@ public class RosterManager {
 
     }
     private void change() {
-        
+
     }
 }
