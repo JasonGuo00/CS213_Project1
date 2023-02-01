@@ -11,11 +11,33 @@ public class Student implements Comparable<Student>{
         this.creditCompleted = creditCompleted;
     }
 
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public Major getMajor() {
+        return major;
+    }
+
+    public int getCreditCompleted() {
+        return creditCompleted;
+    }
+
+    public String getSeniority() {
+        if (creditCompleted < 30) {
+            return "Freshman";
+        } else if (creditCompleted < 60) {
+            return "Sophomore";
+        } else if (creditCompleted < 90) {
+            return "Junior";
+        } else {
+            return "Senior";
+        }
+    }
+
     @Override
     public int compareTo(Student student) {
-        Profile student1 = profile;
-        Profile student2 = student.profile;
-        return student1.compareTo(student2);
+        return profile.compareTo(student.profile);
     }
 
     @Override

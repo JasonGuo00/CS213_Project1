@@ -24,4 +24,7 @@ public class Constants {
     public static final int EQUALS = 0;
     public static final int GREATER = 1;
     public static final int LESSER = -1;
+    public static final int ROSTER_CAPACITY = 4;
+    public static final int ROSTER_INC = 4;
+    public static final int NOT_FOUND = -1;
 }
