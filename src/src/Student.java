@@ -33,4 +33,8 @@ public class Student implements Comparable<Student>{
         }
         return false;
     }
+
+    public static void main(String[] args) {
+
+    }
 }

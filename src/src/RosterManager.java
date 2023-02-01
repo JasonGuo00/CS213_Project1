@@ -48,4 +48,26 @@ public class RosterManager {
                 break;
         }
     }
+
+    private void add() {
+
+    }
+    private void remove() {
+
+    }
+    private void pname() {
+
+    }
+    private void pschool() {
+
+    }
+    private void pstanding(){
+
+    }
+    private void list() {
+
+    }
+    private void change() {
+        
+    }
 }
