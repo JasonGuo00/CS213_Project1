@@ -36,7 +36,7 @@ public class Roster {
             this.grow();
         }
 
-        for (i = size - 1; i >= 0 && roster[i].compareTo(student) > 1; i--) {
+        for (i = size - 1; i >= 0 && roster[i].compareTo(student) > 0; i--) {
             roster[i + 1] = roster[i];
         }
 
@@ -101,14 +101,18 @@ public class Roster {
             }
         }
     }
-    public int changeMajor(Student stu, Major major) {
-        int target = find(stu);
-        if(target == Constants.NOT_FOUND) {
-            return Constants.NOT_FOUND;
-        }
-        else {
-            roster[target].setMajor(major);
-            return 1;
+
+    private void sortStanding() {
+        for (int i = 1; i < size; ++i) {
+            Student item = roster[i];
+            int j = i - 1;
+
+            while (j >= 0 && compareStanding(item, roster[j]) < 0) {
+                roster[j + 1] = roster[j];
+                j--;
+            }
+
+            roster[j + 1] = item;
         }
     }
 
@@ -142,24 +146,30 @@ public class Roster {
 
     private int compareMajor(Major major1, Major major2) {
         int compare_school = major1.school.compareTo(major2.school);
-        if (compare_school != 0) {
-            return major1.compareTo(major2);
+        if (compare_school == 0) {
+            return major1.name().compareTo(major2.name());
         } else {
             return compare_school;
         }
     }
 
-    private void sortStanding() {
-        for (int i = 1; i < size; ++i) {
-            Student item = roster[i];
-            int j = i - 1;
+    private int compareStanding(Student student1, Student student2) {
+        int compare_standing = student1.getSeniority().compareTo(student2.getSeniority());
+        if (compare_standing == 0) {
+            return student1.getCreditCompleted() - student2.getCreditCompleted();
+        } else {
+            return compare_standing;
+        }
+    }
 
-            while (j >= 0 && roster[j].getCreditCompleted() > item.getCreditCompleted()) {
-                roster[j + 1] = roster[j];
-                j--;
-            }
-
-            roster[j + 1] = item;
+    public int changeMajor(Student stu, Major major) {
+        int target = find(stu);
+        if(target == Constants.NOT_FOUND) {
+            return Constants.NOT_FOUND;
+        }
+        else {
+            roster[target].setMajor(major);
+            return 1;
         }
     }
 }
