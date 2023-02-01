@@ -28,4 +28,11 @@ public class Constants {
     public static final int ROSTER_INC = 4;
     public static final int NOT_FOUND = -1;
     public static final int MINAGE = 16;
+    public static final int SOPHOMORE_CREDS = 30;
+    public static final int JUNIOR_CREDS = 60;
+    public static final int SENIOR_CREDS = 90;
+    public static final int ARGUMENTS_A = 5;
+    public static final int ARGUMENTS_R = 3;
+    public static final int ARGUMENTS_L = 1;
+    public static final int ARGUMENTS_C = 4;
 }

@@ -28,11 +28,11 @@ public class Student implements Comparable<Student>{
     }
 
     public String getSeniority() {
-        if (creditCompleted < 30) {
+        if (creditCompleted < Constants.SOPHOMORE_CREDS) {
             return "Freshman";
-        } else if (creditCompleted < 60) {
+        } else if (creditCompleted < Constants.JUNIOR_CREDS) {
             return "Sophomore";
-        } else if (creditCompleted < 90) {
+        } else if (creditCompleted < Constants.SENIOR_CREDS) {
             return "Junior";
         } else {
             return "Senior";

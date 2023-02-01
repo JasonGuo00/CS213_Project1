@@ -23,7 +23,7 @@ public class Roster {
         return Constants.NOT_FOUND;
     }
     private void grow() {
-        Student[] new_roster = new Student[roster.length + 4];
+        Student[] new_roster = new Student[roster.length + Constants.ROSTER_INC];
         for (int i = 0; i < size; i++) {
             new_roster[i] = roster[i];
         }
