@@ -106,6 +106,30 @@ public class Date implements Comparable<Date> {
         return true;
     }
 
+    public boolean isUnderage() {
+        Calendar calendar = Calendar.getInstance();
+        if(calendar.get(Calendar.YEAR) - year > Constants.MINAGE) {
+            return false;
+        }
+        else if(calendar.get(Calendar.YEAR) - year < Constants.MINAGE) {
+            return true;
+        }
+        else {
+            if(calendar.get(Calendar.MONTH) < month) {
+                return true;
+            }
+            else if(calendar.get(Calendar.MONTH) > month) {
+                return false;
+            }
+            else {
+                if(calendar.get(Calendar.DATE) < day) {
+                    return true;
+                }
+                return false;
+            }
+        }
+    }
+
     private boolean isLeapYear() {
         if(year % 4 == 0) {
             if(year % 100 == 0) {
