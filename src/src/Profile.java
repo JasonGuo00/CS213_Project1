@@ -13,18 +13,20 @@ public class Profile implements Comparable<Profile>{
     }
     @Override
     public int compareTo(Profile prof) {
-        if(lname.compareTo(prof.lname) < Constants.EQUALS) {
+        String lname_case = lname.toLowerCase();
+        String fname_case = fname.toLowerCase();
+        if(lname_case.compareTo(prof.lname.toLowerCase()) < Constants.EQUALS) {
             return Constants.LESSER;
         }
-        else if(lname.compareTo(prof.lname) > Constants.EQUALS) {
+        else if(lname_case.compareTo(prof.lname.toLowerCase()) > Constants.EQUALS) {
             return Constants.GREATER;
         }
         // Same last name
         else {
-            if(fname.compareTo(prof.fname) < Constants.EQUALS) {
+            if(fname_case.compareTo(prof.fname.toLowerCase()) < Constants.EQUALS) {
                 return Constants.LESSER;
             }
-            else if(fname.compareTo(prof.fname) > Constants.EQUALS) {
+            else if(fname_case.compareTo(prof.fname.toLowerCase()) > Constants.EQUALS) {
                 return Constants.GREATER;
             }
             // Same first and last name, result depends only on dob
@@ -43,7 +45,7 @@ public class Profile implements Comparable<Profile>{
     public boolean equals(Object obj) {
         if(obj instanceof Profile) {
             Profile profile = (Profile) obj;
-            if (fname.equals(profile.fname) && lname.equals(profile.lname) && dob.equals(profile.dob)) {
+            if (fname.equalsIgnoreCase(profile.fname) && lname.equalsIgnoreCase(profile.lname) && dob.equals(profile.dob)) {
                 return true;
             }
         }
