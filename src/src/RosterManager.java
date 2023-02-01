@@ -11,15 +11,18 @@ public class RosterManager {
         roster = new Roster();
         Scanner obj = new Scanner(System.in);
         boolean stop = false;
+        System.out.println("Roster Manager running...");
         while(!stop) {
-            System.out.println("Roster Manager running...");
-            StringTokenizer tokens = new StringTokenizer(obj.nextLine());
-            String input = tokens.nextToken();
-            if(input.equals("Q")) {
-                stop = true;
-            }
-            else {
-                interpreter(input, tokens);
+            String line = obj.nextLine();
+            if(!line.isEmpty()) {
+                StringTokenizer tokens = new StringTokenizer(line);
+                String input = tokens.nextToken();
+                if(input.equals("Q")) {
+                    stop = true;
+                }
+                else {
+                    interpreter(input, tokens);
+                }
             }
         }
         System.out.println("Roster Manager terminated.");
@@ -30,7 +33,7 @@ public class RosterManager {
         switch(input) {
             case "A":
                 if(tokens.countTokens() == 5) {
-                    add(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), Integer.parseInt(tokens.nextToken()));
+                    add(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken());
                 }
                 else {
                     System.out.println("Invalid number of arguments.");
@@ -46,18 +49,37 @@ public class RosterManager {
 
                 break;
             case "P":
-                pname();
+                if(roster.getSize() == 0) {
+                    System.out.println("Student Roster is empty!");
+                }
+                else {
+                    pname();
+                }
                 break;
             case "PS":
-                pschool();
+                if(roster.getSize() == 0) {
+                    System.out.println("Student Roster is empty!");
+                }
+                else {
+                    pschool();
+                }
                 break;
             case "PC":
-                pstanding();
+                if(roster.getSize() == 0) {
+                    System.out.println("Student Roster is empty!");
+                }
+                else {
+                    pstanding();
+                }
                 break;
             case "L":
                 if(tokens.countTokens() == 1) {
-                    list(tokens.nextToken());
-                    System.out.println("List students in a Specified School, sorted, to be implemented.");
+                    if(roster.getSize() == 0) {
+                        System.out.println("Student Roster is empty!");
+                    }
+                    else {
+                        list(tokens.nextToken());
+                    }
                 }
                 else {
                     System.out.println("Invalid number of arguments.");
@@ -72,52 +94,90 @@ public class RosterManager {
                 }
                 break;
             default:
-                System.out.println("Invalid input.");
+                System.out.println(input + " is an invalid command!");
                 break;
         }
     }
 
-    private void add(String fname, String lname, String date, String major, int credits) {
+    private void add(String fname, String lname, String date, String major, String cr) {
         Date d = new Date(date);
-        if(d.isValid() && !d.isUnderage() && credits >= 0 && getMajor(major) != null) {
+        int credits = -1;
+        if(cr.matches("[0-9]+") || cr.matches("-?[0-9]+")) {
+            credits = Integer.parseInt(cr);
+        }
+
+        if(!d.isValid()) {
+            System.out.println("DOB invalid: " + date + " not a valid calendar date!");
+        }
+        else if(d.isUnderage()) {
+            System.out.println("DOB invalid: " + date + " younger than 16 years old.");
+        }
+        else if(!cr.matches("[0-9]+") && !cr.matches("-?[0-9]+")) {
+            System.out.println("Credits completed invalid: not an integer!");
+        }
+        else if(credits < 0) {
+            System.out.println("Credit completed invalid: cannot be negative!");
+        }
+        else if(getMajor(major) == null) {
+            System.out.println("Major code invalid: " + major);
+        }
+        else {
             Student s = new Student(new Profile(lname, fname, d), getMajor(major), credits);
             if(!roster.contains(s)) {
                 roster.add(s);
-                System.out.println("Successfully added: " + fname + " " + lname + " " + date + " " + major + " " + credits);
+                System.out.println(fname + " " + lname + " " + date + " added to the roster.");
             }
-        }
-        else {
-            System.out.println("Student was unable to be added.");
+            else {
+                System.out.println(fname + " " + lname + " " + date + " is already in the roster.");
+            }
         }
     }
     private void remove(String fname, String lname, String date) {
         Student s = new Student(new Profile(lname, fname, new Date(date)), Major.CS, 0);
         if(roster.remove(s)) {
-            System.out.println(fname + " " + lname + " was successfully removed.");
+            System.out.println(fname + " " + lname + " " + date + " removed from the roster.");
         }
         else {
-            System.out.println("Failed to remove: student is not on the roster.");
+            System.out.println(fname + " " + lname + " " + date + " is not on the roster.");
         }
     }
     private void pname() {
+        System.out.println("* Student roster sorted by last name, first name, DOB **");
         roster.print();
+        System.out.println("* end of roster **");
     }
     private void pschool() {
+        System.out.println("* Student roster sorted by school, major **");
         roster.printBySchoolMajor();
+        System.out.println("* end of roster **");
     }
     private void pstanding(){
+        System.out.println("* Student roster sorted by standing **");
         roster.printByStanding();
+        System.out.println("* end of roster **");
     }
     private void list(String school) {
-        roster.printBySchool(school);
-    }
-    private void change(String fname, String lname, String date, String major) {
-        Student s = new Student(new Profile(lname, fname, new Date(date)), Major.CS, 0);
-        if(roster.changeMajor(s, getMajor(major)) != Constants.NOT_FOUND) {
-            System.out.println("Major for " + fname + " " + lname + " was changed to " + getMajor(major));
+        if(!school.equalsIgnoreCase(Major.CS.school) && !school.equalsIgnoreCase(Major.EE.school) && !school.equalsIgnoreCase(Major.BAIT.school) && !school.equalsIgnoreCase(Major.ITI.school)) {
+            System.out.println("School doesn't exist: " + school);
         }
         else {
-            System.out.println("Failed to change: student is not on the roster.");
+            System.out.println("* Students in " + school + " *");
+            roster.printBySchool(school);
+            System.out.println("* end of roster **");
+        }
+    }
+    private void change(String fname, String lname, String date, String major) {
+        if(getMajor(major) == null) {
+            System.out.println("Major code invalid: " + major);
+        }
+        else {
+            Student s = new Student(new Profile(lname, fname, new Date(date)), getMajor(major), 0);
+            if(roster.changeMajor(s, getMajor(major)) != Constants.NOT_FOUND) {
+                System.out.println(fname + " " + lname + " " + date + " major changed to " + major);
+            }
+            else {
+                System.out.println(fname + " " + lname + " " + date + " is not in the roster.");
+            }
         }
     }
     private Major getMajor(String major) {

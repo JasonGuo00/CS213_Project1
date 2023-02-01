@@ -115,10 +115,10 @@ public class Date implements Comparable<Date> {
             return true;
         }
         else {
-            if(calendar.get(Calendar.MONTH) < month) {
+            if(calendar.get(Calendar.MONTH) + Constants.CALENDAR_MONTH_OFFSET < month) {
                 return true;
             }
-            else if(calendar.get(Calendar.MONTH) > month) {
+            else if(calendar.get(Calendar.MONTH) + Constants.CALENDAR_MONTH_OFFSET > month) {
                 return false;
             }
             else {

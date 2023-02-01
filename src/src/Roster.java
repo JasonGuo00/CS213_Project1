@@ -10,6 +10,10 @@ public class Roster {
         size = 0;
     }
 
+    public int getSize() {
+        return size;
+    }
+
     private int find(Student student) {
         for (int i = 0; i < size; i++) {
             if (student.equals(roster[i])) {
