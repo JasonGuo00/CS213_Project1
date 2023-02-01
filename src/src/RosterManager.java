@@ -61,7 +61,7 @@ public class RosterManager {
                     System.out.println("Student Roster is empty!");
                 }
                 else {
-                    pschool();
+                    pstanding();
                 }
                 break;
             case "PC":
@@ -69,7 +69,7 @@ public class RosterManager {
                     System.out.println("Student Roster is empty!");
                 }
                 else {
-                    pstanding();
+                    pschool();
                 }
                 break;
             case "L":
