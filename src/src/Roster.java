@@ -90,6 +90,24 @@ public class Roster {
         this.sortProfiles();
     }
 
+    public void printBySchool(String school) {
+        for(int i = 0; i < size; i++) {
+            if(roster[i].getMajor().school.equalsIgnoreCase(school)) {
+                System.out.println(roster[i]);
+            }
+        }
+    }
+    public int changeMajor(Student stu, Major major) {
+        int target = find(stu);
+        if(target == Constants.NOT_FOUND) {
+            return Constants.NOT_FOUND;
+        }
+        else {
+            roster[target].setMajor(major);
+            return 1;
+        }
+    }
+
     private void sortProfiles() {
         for (int i = 1; i < size; ++i) {
             Student item = roster[i];

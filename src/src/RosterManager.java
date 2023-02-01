@@ -39,7 +39,6 @@ public class RosterManager {
             case "R":
                 if(tokens.countTokens() == 3) {
                     remove(tokens.nextToken(), tokens.nextToken(), tokens.nextToken());
-                    System.out.println("Remove to be implemented.");
                 }
                 else {
                     System.out.println("Invalid number of arguments.");
@@ -67,7 +66,6 @@ public class RosterManager {
             case "C":
                 if(tokens.countTokens() == 4) {
                     change(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken());
-                    System.out.println("Change a student's major to be implemented.");
                 }
                 else {
                     System.out.println("Invalid number of arguments.");
@@ -94,7 +92,6 @@ public class RosterManager {
     }
     private void remove(String fname, String lname, String date) {
         Student s = new Student(new Profile(lname, fname, new Date(date)), Major.CS, 0);
-        System.out.println(roster.contains(s));
         if(roster.remove(s)) {
             System.out.println(fname + " " + lname + " was successfully removed.");
         }
@@ -112,10 +109,16 @@ public class RosterManager {
         roster.printByStanding();
     }
     private void list(String school) {
-
+        roster.printBySchool(school);
     }
     private void change(String fname, String lname, String date, String major) {
-
+        Student s = new Student(new Profile(lname, fname, new Date(date)), Major.CS, 0);
+        if(roster.changeMajor(s, getMajor(major)) != Constants.NOT_FOUND) {
+            System.out.println("Major for " + fname + " " + lname + " was changed to " + getMajor(major));
+        }
+        else {
+            System.out.println("Failed to change: student is not on the roster.");
+        }
     }
     private Major getMajor(String major) {
         if(major.equalsIgnoreCase("CS")) {
