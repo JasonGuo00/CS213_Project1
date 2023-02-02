@@ -39,4 +39,7 @@ public class Constants {
     public static final int ARGUMENTS_R = 3;
     public static final int ARGUMENTS_L = 1;
     public static final int ARGUMENTS_C = 4;
+    public static final int QUADRENNIAL = 4;
+    public static final int CENTENNIAL = 100;
+    public static final int QUARTERCENTENNIAL = 400;
 }

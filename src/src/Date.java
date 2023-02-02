@@ -105,7 +105,7 @@ public class Date implements Comparable<Date> {
     public boolean isValid() {
         Calendar calendar = Calendar.getInstance();
         // Check if input date is possible based on common sense
-        if(year > calendar.get(Calendar.YEAR) || day > 31 || day < 1 || month > 12 || month < 1) {
+        if(year > calendar.get(Calendar.YEAR) || year < 0 || day > 31 || day < 1 || month > 12 || month < 1) {
             return false;
         }
         // Check if the input date is in the future
@@ -174,9 +174,9 @@ public class Date implements Comparable<Date> {
      * @return Returns true if a given date is a leap year, false otherwise
      */
     private boolean isLeapYear() {
-        if(year % 4 == 0) {
-            if(year % 100 == 0) {
-                if(year % 400 == 0) {
+        if(year % Constants.QUADRENNIAL == 0) {
+            if(year % Constants.CENTENNIAL == 0) {
+                if(year % Constants.QUARTERCENTENNIAL == 0) {
                     return true;
                 }
                 else {
@@ -198,7 +198,77 @@ public class Date implements Comparable<Date> {
      * @param args
      */
     public static void main(String[] args) {
+        Date date = new Date("2/29/2003");
+        boolean expectedOutput = false;
+        boolean actualOutput = date.isValid();
+        System.out.println("** Test Case 1: a date in a non leap year should have only 28 days. **");
+        System.out.println("Date: " + date + " || Expected Result: " + expectedOutput + " || Actual Result: " + actualOutput);
 
+        date = new Date("4/31/2003");
+        expectedOutput = false;
+        actualOutput = date.isValid();
+        System.out.println("** Test Case 2: a date in a April should have only 30 days. **");
+        System.out.println("Date: " + date + " || Expected Result: " + expectedOutput + " || Actual Result: " + actualOutput);
+
+        date = new Date("13/31/2003");
+        expectedOutput = false;
+        actualOutput = date.isValid();
+        System.out.println("** Test Case 3: a date should only have months between 1-12. **");
+        System.out.println("Date: " + date + " || Expected Result: " + expectedOutput + " || Actual Result: " + actualOutput);
+
+        date = new Date("3/32/2003");
+        expectedOutput = false;
+        actualOutput = date.isValid();
+        System.out.println("** Test Case 4: No date can have more than 31 days. **");
+        System.out.println("Date: " + date + " || Expected Result: " + expectedOutput + " || Actual Result: " + actualOutput);
+
+        date = new Date("-1/31/2003");
+        expectedOutput = false;
+        actualOutput = date.isValid();
+        System.out.println("** Test Case 5: No date can have a negative month. **");
+        System.out.println("Date: " + date + " || Expected Result: " + expectedOutput + " || Actual Result: " + actualOutput);
+
+        date = new Date("2/29/2020");
+        expectedOutput = true;
+        actualOutput = date.isValid();
+        System.out.println("** Test Case 6: a date in a leap year can have 29 days **");
+        System.out.println("Date: " + date + " || Expected Result: " + expectedOutput + " || Actual Result: " + actualOutput);
+
+        date = new Date("7/31/1999");
+        expectedOutput = true;
+        actualOutput = date.isValid();
+        System.out.println("** Test Case 7: a date in July can have 31 days. **");
+        System.out.println("Date: " + date + " || Expected Result: " + expectedOutput + " || Actual Result: " + actualOutput);
+
+        date = new Date();
+        expectedOutput = true;
+        actualOutput = date.isValid();
+        System.out.println("** Test Case 8: The current date should be a valid date. **");
+        System.out.println("Date: " + date + " || Expected Result: " + expectedOutput + " || Actual Result: " + actualOutput);
+
+        date = new Date("11/30/1989");
+        expectedOutput = true;
+        actualOutput = date.isValid();
+        System.out.println("** Test Case 9: a date in November can have 30 days. **");
+        System.out.println("Date: " + date + " || Expected Result: " + expectedOutput + " || Actual Result: " + actualOutput);
+
+        date = new Date("12/1/2023");
+        expectedOutput = false;
+        actualOutput = date.isValid();
+        System.out.println("** Test Case 10: a future date should be invalid. **");
+        System.out.println("Date: " + date + " || Expected Result: " + expectedOutput + " || Actual Result: " + actualOutput);
+
+        date = new Date("3/-1/2004");
+        expectedOutput = false;
+        actualOutput = date.isValid();
+        System.out.println("** Test Case 11: a negative day should be invalid. **");
+        System.out.println("Date: " + date + " || Expected Result: " + expectedOutput + " || Actual Result: " + actualOutput);
+
+        date = new Date("8/18/-1");
+        expectedOutput = false;
+        actualOutput = date.isValid();
+        System.out.println("** Test Case 12: a negative year should be invalid. **");
+        System.out.println("Date: " + date + " || Expected Result: " + expectedOutput + " || Actual Result: " + actualOutput);
     }
 
 }

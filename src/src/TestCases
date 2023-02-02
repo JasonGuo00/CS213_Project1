@@ -1,0 +1,19 @@
+-----Test Cases for Data isValid() Method-----
+
+// The 5 test cases from Project1TestCases.txt
+Case 1: 2/29/2023 -> test if the 29th is valid on a non leap year               Expected Result: false
+Case 2: 4/31/2003 -> test if the 31st is valid in April                         Expected Result: false
+Case 3: 13/31/2003 -> test if an out of bounds month is valid                   Expected Result: false
+Case 4: 3/32/2003 -> test if an out of bounds day is valid                      Expected Result: false
+Case 5: -1/31/2003 -> test if a negative month is valid                         Expected Result: false
+
+// Other test cases
+Case 6: 2/29/2020 -> test if the 29th is valid on a leap year                   Expected Result: true
+Case 7: 7/31/1999 -> test if a past date on a month with 31 days is valid       Expected Result: true
+Case 8: new Date() -> test if the current date is valid                         Expected Result: true
+Case 9: 11/30/1989 -> test if a past date on a month with 30 days is valid      Expected Result: true
+Case 10: 12/1/2023 -> test if a future date is valid                             Expected Result: false
+Case 11: 3/-1/2004 -> test if a negative day is valid                           Expected Result: false
+Case 12: 8/18/-1 -> test if a negative year is valid                            Expected Result: false
+
+-----Test Cases for Student compareTo() Method-----
