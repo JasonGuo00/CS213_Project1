@@ -108,10 +108,56 @@ public class Student implements Comparable<Student>{
 
     /**
      * Testbed Main.
-     * Used to test the functionality of the Student class.
+     * Used to test the functionality of the Student compareTo() method.
      * @param args
      */
     public static void main(String[] args) {
+        Student s1 = new Student(new Profile("Doe", "John", new Date("1/14/2001")), Major.CS, 0);
+        Student s2 = new Student(new Profile("Doe", "Jane", new Date("3/2/2002")), Major.CS, 0);
+        int expectedOutput = 1;
+        int actualOutput = s1.compareTo(s2);
+        System.out.println("** Test Case 1: Compare first name lexicographically if last names are the same. **");
+        System.out.println("Student 1 : " + s1.getProfile() + " Compared to Student 2: " + s2.getProfile());
+        System.out.println("Expected Result: " + expectedOutput + " || Actual Result: " + actualOutput);
 
+        s1 = new Student(new Profile("Doe", "John", new Date("4/1/1999")), Major.CS, 0);
+        s2 = new Student(new Profile("Doe", "John", new Date("11/1/2002")), Major.CS, 0);
+        expectedOutput = -1;
+        actualOutput = s1.compareTo(s2);
+        System.out.println("** Test Case 2: Compare d.o.b chronologically if first and last names are the same. **");
+        System.out.println("Student 1: " + s1.getProfile() + " Compared to Student 2: " + s2.getProfile());
+        System.out.println("Expected Result: " + expectedOutput + " || Actual Result: " + actualOutput);
+
+        s1 = new Student(new Profile("Kim", "Robert", new Date("12/14/2004")), Major.CS, 0);
+        s2 = new Student(new Profile("Zoo", "John", new Date("1/2/2000")), Major.CS, 0);
+        expectedOutput = -1;
+        actualOutput = s1.compareTo(s2);
+        System.out.println("** Test Case 3: Compares last names lexicographically before anything else. **");
+        System.out.println("Student 1: " + s1.getProfile() + " Compared to Student 2: " + s2.getProfile());
+        System.out.println("Expected Result: " + expectedOutput + " || Actual Result: " + actualOutput);
+
+        s1 = new Student(new Profile("Doe", "John", new Date("1/1/2000")), Major.CS, 0);
+        s2 = new Student(new Profile("Doe", "John", new Date("1/1/2000")), Major.CS, 0);
+        expectedOutput = 0;
+        actualOutput = s1.compareTo(s2);
+        System.out.println("** Test Case 4: Compare two students with the same profile. **");
+        System.out.println("Student 1: " + s1.getProfile() + " Compared to Student 2: " + s2.getProfile());
+        System.out.println("Expected Result: " + expectedOutput + " || Actual Result: " + actualOutput);
+
+        s1 = new Student(new Profile("Wong", "Allison", new Date("6/12/2001")), Major.CS, 0);
+        s2 = new Student(new Profile("Wang", "Johnathan", new Date("9/12/2004")), Major.CS, 0);
+        expectedOutput = 1;
+        actualOutput = s1.compareTo(s2);
+        System.out.println("** Test Case 5: Compare two students with last names containing the same starting letter, lexicographically. **");
+        System.out.println("Student 1: " + s1.getProfile() + " Compared to Student 2: " + s2.getProfile());
+        System.out.println("Expected Result: " + expectedOutput + " || Actual Result: " + actualOutput);
+
+        s1 = new Student(new Profile("Wong", "Allison", new Date("6/12/2001")), Major.CS, 0);
+        s2 = new Student(new Profile("Wong", "Alice", new Date("9/12/2004")), Major.CS, 0);
+        expectedOutput = 1;
+        actualOutput = s1.compareTo(s2);
+        System.out.println("** Test Case 6: Compare two students with the same last name and same starting letters in the first name, lexicographically. **");
+        System.out.println("Student 1: " + s1.getProfile() + " Compared to Student 2: " + s2.getProfile());
+        System.out.println("Expected Result: " + expectedOutput + " || Actual Result: " + actualOutput);
     }
 }

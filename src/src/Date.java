@@ -194,7 +194,7 @@ public class Date implements Comparable<Date> {
 
     /**
      * Testbed Main.
-     * Used to test functionality of the Date objects.
+     * Used to test functionality of the Date isValid() method.
      * @param args
      */
     public static void main(String[] args) {
