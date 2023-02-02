@@ -105,7 +105,7 @@ public class Date implements Comparable<Date> {
     public boolean isValid() {
         Calendar calendar = Calendar.getInstance();
         // Check if input date is possible based on common sense
-        if(year > calendar.get(Calendar.YEAR) || year < 0 || day > 31 || day < 1 || month > 12 || month < 1) {
+        if(year > calendar.get(Calendar.YEAR) || year < 0 || day > Constants.MAX_DAYS || day < Constants.MIN_DAYS || month > Constants.MAX_MONTHS || month < Constants.MIN_MONTHS) {
             return false;
         }
         // Check if the input date is in the future
@@ -121,19 +121,19 @@ public class Date implements Comparable<Date> {
         }
         // Check dates with 30 days instead of 31
         if(month == Constants.APRIL || month == Constants.JUNE || month == Constants.SEP || month == Constants.NOV) {
-            if(day > 30) {
+            if(day > Constants.MAXDAYS30) {
                 return false;
             }
         }
         // Check February
         if(month == Constants.FEB) {
             if(isLeapYear()) {
-                if(day > 29) {
+                if(day > Constants.LEAP) {
                     return false;
                 }
             }
             else {
-                if(day > 28) {
+                if(day > Constants.NOTLEAP) {
                     return false;
                 }
             }

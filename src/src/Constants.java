@@ -42,4 +42,7 @@ public class Constants {
     public static final int QUADRENNIAL = 4;
     public static final int CENTENNIAL = 100;
     public static final int QUARTERCENTENNIAL = 400;
+    public static final int MAXDAYS30 = 30;
+    public static final int LEAP = 29;
+    public static final int NOTLEAP = 28;
 }
