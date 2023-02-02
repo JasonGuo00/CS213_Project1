@@ -48,7 +48,7 @@ public class RosterManager {
     private void interpreter(String input, StringTokenizer tokens) {
         switch(input) {
             case "A":
-                if(tokens.countTokens() == 5) {
+                if(tokens.countTokens() == Constants.ARGUMENTS_A) {
                     add(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken());
                 }
                 else {
@@ -56,7 +56,7 @@ public class RosterManager {
                 }
                 break;
             case "R":
-                if(tokens.countTokens() == 3) {
+                if(tokens.countTokens() == Constants.ARGUMENTS_R) {
                     remove(tokens.nextToken(), tokens.nextToken(), tokens.nextToken());
                 }
                 else {
@@ -89,7 +89,7 @@ public class RosterManager {
                 }
                 break;
             case "L":
-                if(tokens.countTokens() == 1) {
+                if(tokens.countTokens() == Constants.ARGUMENTS_L) {
                     if(roster.getSize() == 0) {
                         System.out.println("Student Roster is empty!");
                     }
@@ -102,7 +102,7 @@ public class RosterManager {
                 }
                 break;
             case "C":
-                if(tokens.countTokens() == 4) {
+                if(tokens.countTokens() == Constants.ARGUMENTS_C) {
                     change(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken());
                 }
                 else {
