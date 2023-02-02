@@ -1,5 +1,9 @@
 package src;
 
+/**
+ * Public class that simply holds all the constants used throughout the code.
+ * @author Jason Guo, Russel Rivera
+ */
 public class Constants {
     public static final int CALENDAR_MONTH_OFFSET = 1;
     public static final int MONTH = 0;

@@ -1,11 +1,18 @@
 package src;
 import java.util.Calendar;
 
+/**
+ * Date object tracks a year, month, and day, all numerically.
+ * @author Jason Guo, Russel Rivera
+ */
 public class Date implements Comparable<Date> {
     private int year;
     private int month;
     private int day;
 
+    /**
+     * Default constructor: creates the Date object based on the current calendar date
+     */
     public Date() {
         Calendar calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
@@ -13,6 +20,11 @@ public class Date implements Comparable<Date> {
         day = calendar.get(Calendar.DATE);
     }
 
+    /**
+     * Constructor that takes in a string that describes a date.  Initiates
+     * the year, month, and day based on the date inputted.
+     * @param date String in the form of mm/dd/yyyy that describes a date
+     */
     public Date(String date) {
         String[] list = date.split("/");
         month = Integer.parseInt(list[Constants.MONTH]);
@@ -20,6 +32,12 @@ public class Date implements Comparable<Date> {
         year = Integer.parseInt(list[Constants.YEAR]);
     }
 
+    /**
+     * Override of the equals method.
+     * Checks if two dates are equals.
+     * @param obj Date to be compared to
+     * @return Returns true if the two dates are the same, false otherwise
+     */
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof Date) {
@@ -31,6 +49,12 @@ public class Date implements Comparable<Date> {
         return false;
     }
 
+    /**
+     * Overrides the compareTo method.
+     * Compares dates based on whether one date comes before, after, or is the same as the other.
+     * @param date the object to be compared.
+     * @return Returns -1, 0, or 1 based on whether the first date comes before, is equal to, or after the other.
+     */
     @Override
     public int compareTo(Date date) {
         // If the dates are equal
@@ -63,10 +87,21 @@ public class Date implements Comparable<Date> {
             }
         }
     }
+
+    /**
+     * Overrides the toString method.
+     * @return Returns a string of the date in the form of mm/dd/yyyy
+     */
     @Override
     public String toString() {
         return (month + "/" + day + "/" + year);
     }
+
+    /**
+     * Checks if a date is valid calendar date.
+     * Checks for leap years, if the day is within the bounds of the month, whether the date is in the future.
+     * @return Returns true if the date is valid, false otherwise.
+     */
     public boolean isValid() {
         Calendar calendar = Calendar.getInstance();
         // Check if input date is possible based on common sense
@@ -106,6 +141,10 @@ public class Date implements Comparable<Date> {
         return true;
     }
 
+    /**
+     * Checks if a student is younger than 16 based on their date of birth and the current date.
+     * @return Returns true if the student is younger than 16, false otherwise.
+     */
     public boolean isUnderage() {
         Calendar calendar = Calendar.getInstance();
         if(calendar.get(Calendar.YEAR) - year > Constants.MINAGE) {
@@ -130,6 +169,10 @@ public class Date implements Comparable<Date> {
         }
     }
 
+    /**
+     * Checks if a given date is a leap year.
+     * @return Returns true if a given date is a leap year, false otherwise
+     */
     private boolean isLeapYear() {
         if(year % 4 == 0) {
             if(year % 100 == 0) {
@@ -149,6 +192,11 @@ public class Date implements Comparable<Date> {
         }
     }
 
+    /**
+     * Testbed Main.
+     * Used to test functionality of the Date objects.
+     * @param args
+     */
     public static void main(String[] args) {
 
     }
