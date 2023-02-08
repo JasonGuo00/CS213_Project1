@@ -1,4 +1,4 @@
-package src;
+package roster;
 
 /**
  * Holds all the important information that needs to be tracked for each Student in the roster.

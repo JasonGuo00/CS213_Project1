@@ -1,4 +1,4 @@
-package src;
+package roster;
 
 /**
  * Object to store and handle Student objects
@@ -55,6 +55,7 @@ public class Roster {
     /**
      * Adds Student object to roster, sorted by profile; sorting by last name, first name, then date of birth
      * @param student Student object to add
+     * @return returns 1 on a success, 0 on a failure.
      */
     public boolean add(Student student) {
         int i;
@@ -216,7 +217,7 @@ public class Roster {
      * If school names are the same, compares major name string and returns result.
      * @param major1 first Major object to compare
      * @param major2 second Major object to compare
-     * @return Returns a value less than 0 if major1 < major2, 0 if they are equal, and 1 if the former is greater
+     * @return Returns a value less than 0 if major1 is less than major2, 0 if they are equal, and 1 if the former is greater
      */
     private int compareMajor(Major major1, Major major2) {
         int compare_school = major1.school.compareTo(major2.school);
@@ -233,7 +234,7 @@ public class Roster {
      * If seniority is the same, compares credits and returns result.
      * @param student1 first Student object to compare
      * @param student2 second Student object to compare
-     * @return Returns a value less than 0 if student1 < student2, 0 if they are equal, and 1 if the former is greater
+     * @return Returns a value less than 0 if student1 is less than student2, 0 if they are equal, and 1 if the former is greater
      */
     private int compareStanding(Student student1, Student student2) {
         int compare_standing = student1.getSeniority().compareTo(student2.getSeniority());

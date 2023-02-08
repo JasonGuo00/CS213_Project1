@@ -1,4 +1,4 @@
-package src;
+package roster;
 
 /**
  * Public class that simply holds all the constants used throughout the code.

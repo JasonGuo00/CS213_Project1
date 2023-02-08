@@ -1,4 +1,4 @@
-package src;
+package roster;
 
 /**
  * Enum Major that organizes the different majors the RosterManager can handle.  Includes information on the major's

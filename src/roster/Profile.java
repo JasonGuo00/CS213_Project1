@@ -1,4 +1,4 @@
-package src;
+package roster;
 
 /**
  * Profile contains the first and last name of the Student, as well as their date of birth.
