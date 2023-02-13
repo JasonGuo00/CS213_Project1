@@ -6,12 +6,14 @@ package roster;
  * in the javadoc is a default constructor provided by Java.
  * @author Jason Guo, Russel Rivera
  */
-public class RunProject1 {
+public class RunProject2 {
+
     /**
-     * Main method to start the entire program.
+     * Main Method to start the entire program
      * @param args
      */
     public static void main(String[] args) {
         new TuitionManager().run();
     }
+
 }

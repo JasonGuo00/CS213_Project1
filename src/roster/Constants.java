@@ -45,4 +45,19 @@ public class Constants {
     public static final int MAXDAYS30 = 30;
     public static final int LEAP = 29;
     public static final int NOTLEAP = 28;
+    public static final int MAX_CREDITS = 24;
+    public static final int MIN_CREDITS = 3;
+    public static final int STD_CREDITS = 16;
+    public static final int FULL_TIME_CREDITS = 12;
+    public static final int RES_FULL_TUITION = 12536;
+    public static final int NRES_FULL_TUITION = 29737;
+    public static final int RES_CPH = 404;
+    public static final int NRES_CPH = 966;
+    public static final int FULL_UNI_FEES = 3268;
+    public static final double PART_UNI_FEES = 3268 * 0.8;
+    public static final int INTER_HEALTH_FEES = 2650;
+    public static final int NY_DISCOUNT = 4000;
+    public static final int CT_DISCOUNT = 5000;
+
+
 }

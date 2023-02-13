@@ -8,7 +8,7 @@ import java.util.StringTokenizer;
  * Handles invalid inputs and displays accordingly.
  * @author Jason Guo, Russel Rivera
  */
-public class RosterManager {
+public class TuitionManager {
 
     private Roster roster;
 
@@ -222,20 +222,20 @@ public class RosterManager {
      * @param date Date of birth of the student to be accessed.
      * @param major New major for the student.
      */
-    private void change(String fname, String lname, String date, String major) {
-        if(getMajor(major) == null) {
-            System.out.println("Major code invalid: " + major);
-        }
-        else {
-            Student s = new Student(new Profile(lname, fname, new Date(date)), getMajor(major), 0);
-            if(roster.changeMajor(s, getMajor(major)) != Constants.NOT_FOUND) {
-                System.out.println(fname + " " + lname + " " + date + " major changed to " + major);
-            }
-            else {
-                System.out.println(fname + " " + lname + " " + date + " is not in the roster.");
-            }
-        }
-    }
+//    private void change(String fname, String lname, String date, String major) {
+//        if(getMajor(major) == null) {
+//            System.out.println("Major code invalid: " + major);
+//        }
+//        else {
+//            Student s = new Student(new Profile(lname, fname, new Date(date)), getMajor(major), 0);
+//            if(roster.changeMajor(s, getMajor(major)) != Constants.NOT_FOUND) {
+//                System.out.println(fname + " " + lname + " " + date + " major changed to " + major);
+//            }
+//            else {
+//                System.out.println(fname + " " + lname + " " + date + " is not in the roster.");
+//            }
+//        }
+//    }
 
     /**
      * Obtains the Major enum based on the inputted string.
