@@ -27,11 +27,17 @@ public class Enrollment {
     }
 
     public void add(EnrollStudent enrollStudent) {
-        if(size+1 == enrollStudents.length) {
-            this.grow();
+        int index = find(enrollStudent);
+        if(index == Constants.NOT_FOUND) {
+            if(size+1 == enrollStudents.length) {
+                this.grow();
+            }
+            enrollStudents[size] = enrollStudent;
+            size++;
         }
-        enrollStudents[size] = enrollStudent;
-        size++;
+        else {
+            enrollStudents[index].setCredits(enrollStudent.getCredits());
+        }
     }
     public void remove(EnrollStudent enrollStudent) {
         int index = find(enrollStudent);

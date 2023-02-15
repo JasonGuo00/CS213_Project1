@@ -9,11 +9,11 @@ public class International extends NonResident {
 
     @Override
     public double tuitionDue(int creditsEnrolled) {
-        if(creditsEnrolled >= Constants.FULL_TIME_CREDITS) {
-            return fullTime(creditsEnrolled);
-        }
-        else if(isStudyAbroad) {
+        if(isStudyAbroad) {
             return Constants.INTER_HEALTH_FEES + Constants.FULL_UNI_FEES;
+        }
+        else if(creditsEnrolled >= Constants.FULL_TIME_CREDITS) {
+            return fullTime(creditsEnrolled);
         }
         return -1;
     }
@@ -27,6 +27,15 @@ public class International extends NonResident {
         return total;
     }
 
+    @Override
+    public boolean isValid(int creditsEnrolled) {
+        if(!isStudyAbroad) {
+            return (creditsEnrolled <= Constants.MAX_CREDITS) && (creditsEnrolled >= Constants.FULL_TIME_CREDITS);
+        }
+        else {
+            return (creditsEnrolled <= Constants.FULL_TIME_CREDITS) && (creditsEnrolled >= Constants.MIN_CREDITS);
+        }
+    }
     @Override
     public boolean isResident() {
         return false;

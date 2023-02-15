@@ -22,4 +22,12 @@ public class EnrollStudent  {
         }
         return false;
     }
+
+    public void setCredits(int credits) {
+        creditsEnrolled = credits;
+    }
+
+    public int getCredits() {
+        return creditsEnrolled;
+    }
 }
