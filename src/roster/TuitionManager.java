@@ -13,6 +13,7 @@ import java.util.StringTokenizer;
 public class TuitionManager {
 
     private Roster roster;
+    private Enrollment enrollment;
 
     //UI Class -> Reads, processes, and displays the results on input lines into the console.
 
@@ -21,6 +22,7 @@ public class TuitionManager {
      */
     public void run() {
         roster = new Roster();
+        enrollment = new Enrollment();
         Scanner obj = new Scanner(System.in);
         boolean stop = false;
         System.out.println("Roster Manager running...");
@@ -134,22 +136,44 @@ public class TuitionManager {
                 }
                 break;
             case "E":
+                if (tokens.countTokens() == 5) {
 
+                }
                 break;
             case "D":
-
+                if (tokens.countTokens() == 3) {
+                    dropEnroll(tokens.nextToken(), tokens.nextToken(), tokens.nextToken());
+                } else {
+                    System.out.println("Invalid number of arguments.");
+                }
                 break;
             case "S":
+                if (tokens.countTokens() == 4) {
+                    awardScholarship(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken());
+                } else {
+                    System.out.println("Invalid number of arguments.");
+                }
                 break;
-
             case "PE":
-
+                if (tokens.countTokens() == 0) {
+                    printEnrollment();
+                } else {
+                    System.out.println("Invalid number of arguments.");
+                }
                 break;
             case "PT":
-
+                if (tokens.countTokens() == 0) {
+                    printTuition();
+                } else {
+                    System.out.println("Invalid number of arguments.");
+                }
                 break;
             case "SE":
-
+                if (tokens.countTokens() == 0) {
+                    semesterEnd();
+                } else {
+                    System.out.println("Invalid number of arguments.");
+                }
                 break;
             default:
                 System.out.println(input + " is an invalid command!");
@@ -436,5 +460,32 @@ public class TuitionManager {
         else {
             return null;
         }
+    }
+
+    private void enroll() {
+        
+    }
+
+    private void dropEnroll(String fname, String lname, String date) {
+        Date d = new Date(date);
+
+        enrollment.remove(new EnrollStudent(fname, lname, d, 0));
+    }
+
+    private void awardScholarship(String fname, String lname, String date, String scholarship) {
+        Date d = new Date(date);
+
+    }
+
+    private void printEnrollment() {
+
+    }
+
+    private void printTuition() {
+
+    }
+
+    private void semesterEnd() {
+
     }
 }

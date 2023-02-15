@@ -18,7 +18,7 @@ public class EnrollStudent  {
     public boolean equals(Object obj) {
         if(obj instanceof EnrollStudent) {
             EnrollStudent student = (EnrollStudent)obj;
-            return profile.equals(student.profile) && creditsEnrolled == student.creditsEnrolled;
+            return profile.equals(student.profile);
         }
         return false;
     }
