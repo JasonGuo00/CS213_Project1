@@ -58,6 +58,11 @@ public class Roster {
      * @return returns 1 on a success, 0 on a failure.
      */
     public boolean add(Student student) {
+
+        if(student == null) {
+            return false;
+        }
+
         int i;
 
         if (size + 1 == roster.length) {
