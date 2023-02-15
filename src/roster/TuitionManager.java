@@ -1,4 +1,6 @@
 package roster;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
@@ -22,15 +24,14 @@ public class TuitionManager {
         Scanner obj = new Scanner(System.in);
         boolean stop = false;
         System.out.println("Roster Manager running...");
-        while(!stop) {
+        while (!stop) {
             String line = obj.nextLine();
-            if(!line.isEmpty()) {
+            if (!line.isEmpty()) {
                 StringTokenizer tokens = new StringTokenizer(line);
                 String input = tokens.nextToken();
-                if(input.equals("Q")) {
+                if (input.equals("Q")) {
                     stop = true;
-                }
-                else {
+                } else {
                     interpreter(input, tokens);
                 }
             }
@@ -42,72 +43,113 @@ public class TuitionManager {
      * Interprets the command inputted.
      * Figures out which helper methods to call based on the inputted command and uses the remaining tokens in the input line to
      * fill in the parameters of those methods.
-     * @param input Command that the user wishes to call
+     *
+     * @param input  Command that the user wishes to call
      * @param tokens Remaining inputs from the line that the user inputted, use during method calls
      */
     private void interpreter(String input, StringTokenizer tokens) {
-        switch(input) {
-            case "A":
-                if(tokens.countTokens() == Constants.ARGUMENTS_A) {
-                    add(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken());
+        switch (input) {
+            case "AR":
+                if (tokens.countTokens() == 5) {
+                    addR(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), true);
+                } else {
+                    System.out.println("Invalid number of arguments.");
                 }
-                else {
+                break;
+            case "AN":
+                if (tokens.countTokens() == 5) {
+                    addN(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), true);
+                } else {
+                    System.out.println("Invalid number of arguments.");
+                }
+                break;
+            case "AT":
+                if (tokens.countTokens() == 6) {
+                    addT(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), true);
+                } else {
+                    System.out.println("Invalid number of arguments.");
+                }
+                break;
+            case "AI":
+                if (tokens.countTokens() == 5) {
+                    addI(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), "false", true);
+                } else if (tokens.countTokens() == 6) {
+                    addI(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), true);
+                } else {
                     System.out.println("Invalid number of arguments.");
                 }
                 break;
             case "R":
-                if(tokens.countTokens() == Constants.ARGUMENTS_R) {
+                if (tokens.countTokens() == Constants.ARGUMENTS_R) {
                     remove(tokens.nextToken(), tokens.nextToken(), tokens.nextToken());
-                }
-                else {
+                } else {
                     System.out.println("Invalid number of arguments.");
                 }
 
                 break;
             case "P":
-                if(roster.getSize() == 0) {
+                if (roster.getSize() == 0) {
                     System.out.println("Student Roster is empty!");
-                }
-                else {
+                } else {
                     pname();
                 }
                 break;
             case "PS":
-                if(roster.getSize() == 0) {
+                if (roster.getSize() == 0) {
                     System.out.println("Student Roster is empty!");
-                }
-                else {
+                } else {
                     pstanding();
                 }
                 break;
             case "PC":
-                if(roster.getSize() == 0) {
+                if (roster.getSize() == 0) {
                     System.out.println("Student Roster is empty!");
-                }
-                else {
+                } else {
                     pschool();
                 }
                 break;
             case "L":
-                if(tokens.countTokens() == Constants.ARGUMENTS_L) {
-                    if(roster.getSize() == 0) {
+                if (tokens.countTokens() == Constants.ARGUMENTS_L) {
+                    if (roster.getSize() == 0) {
                         System.out.println("Student Roster is empty!");
-                    }
-                    else {
+                    } else {
                         list(tokens.nextToken());
                     }
-                }
-                else {
+                } else {
                     System.out.println("Invalid number of arguments.");
                 }
                 break;
             case "C":
-                if(tokens.countTokens() == Constants.ARGUMENTS_C) {
+                if (tokens.countTokens() == Constants.ARGUMENTS_C) {
                     change(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken());
-                }
-                else {
+                } else {
                     System.out.println("Invalid number of arguments.");
                 }
+                break;
+            case "LS":
+                if (tokens.countTokens() == 1) {
+                    addList(tokens.nextToken());
+                } else {
+                    System.out.println("Invalid number of arguments.");
+                }
+                break;
+            case "E":
+
+                break;
+            case "D":
+
+                break;
+            case "S":
+                break;
+
+            case "PE":
+
+                break;
+            case "PT":
+
+                break;
+            case "SE":
+
                 break;
             default:
                 System.out.println(input + " is an invalid command!");
@@ -115,45 +157,177 @@ public class TuitionManager {
         }
     }
 
+    private boolean checkValidity(String date, String major, String cr) {
+        Date d = new Date(date);
+
+        if (!d.isValid()) {
+            System.out.println("DOB invalid: " + date + " not a valid calendar date!");
+            return false;
+        } else if (d.isUnderage()) {
+            System.out.println("DOB invalid: " + date + " younger than 16 years old.");
+            return false;
+        } else if (!cr.matches("-?[0-9]+")) {
+            System.out.println("Credits completed invalid: not an integer!");
+            return false;
+        } else if (cr.matches("-[0-9]+")) {
+            System.out.println("Credit completed invalid: cannot be negative!");
+            return false;
+        } else if (getMajor(major) == null) {
+            System.out.println("Major code invalid: " + major);
+            return false;
+        }
+
+        return true;
+    }
+
     /**
-     * Adds a Student object to the Roster array
+     * Adds a Resident object to the Roster array
      * @param fname First name of the student
      * @param lname Last name of the student
      * @param date Date of birth of the student
      * @param major Student's major
      * @param cr Number of credits the student has completed (in a String)
      */
-    private void add(String fname, String lname, String date, String major, String cr) {
+    private void addR(String fname, String lname, String date, String major, String cr, boolean print) {
         Date d = new Date(date);
-        int credits = -1;
-        if(cr.matches("[0-9]+") || cr.matches("-?[0-9]+")) {
-            credits = Integer.parseInt(cr);
-        }
 
-        if(!d.isValid()) {
-            System.out.println("DOB invalid: " + date + " not a valid calendar date!");
-        }
-        else if(d.isUnderage()) {
-            System.out.println("DOB invalid: " + date + " younger than 16 years old.");
-        }
-        else if(!cr.matches("[0-9]+") && !cr.matches("-?[0-9]+")) {
-            System.out.println("Credits completed invalid: not an integer!");
-        }
-        else if(credits < 0) {
-            System.out.println("Credit completed invalid: cannot be negative!");
-        }
-        else if(getMajor(major) == null) {
-            System.out.println("Major code invalid: " + major);
-        }
-        else {
-            Student s = new Student(new Profile(lname, fname, d), getMajor(major), credits);
+        if (checkValidity(date, major, cr)) {
+            int credits = Integer.parseInt(cr);
+
+            Student s = new Resident(new Profile(lname, fname, d), getMajor(major), credits);
+
             if(!roster.contains(s)) {
                 roster.add(s);
-                System.out.println(fname + " " + lname + " " + date + " added to the roster.");
+
+                if (print)
+                    System.out.println(fname + " " + lname + " " + date + " added to the roster.");
             }
-            else {
+            else if (print) {
                 System.out.println(fname + " " + lname + " " + date + " is already in the roster.");
             }
+        }
+    }
+
+    /**
+     * Adds a NonResident object to the Roster array
+     * @param fname First name of the student
+     * @param lname Last name of the student
+     * @param date Date of birth of the student
+     * @param major Student's major
+     * @param cr Number of credits the student has completed (in a String)
+     */
+    private void addN(String fname, String lname, String date, String major, String cr, boolean print) {
+        Date d = new Date(date);
+
+        if (checkValidity(date, major, cr)) {
+            int credits = Integer.parseInt(cr);
+
+            Student s = new NonResident(new Profile(lname, fname, d), getMajor(major), credits);
+
+            if(!roster.contains(s)) {
+                roster.add(s);
+
+                if (print)
+                    System.out.println(fname + " " + lname + " " + date + " added to the roster.");
+            }
+            else if (print) {
+                System.out.println(fname + " " + lname + " " + date + " is already in the roster.");
+            }
+        }
+    }
+
+    /**
+     * Adds a Tristate object to the Roster array
+     * @param fname First name of the student
+     * @param lname Last name of the student
+     * @param date Date of birth of the student
+     * @param major Student's major
+     * @param cr Number of credits the student has completed (in a String)
+     */
+    private void addT(String fname, String lname, String date, String major, String cr, String state, boolean print) {
+        Date d = new Date(date);
+
+        if (checkValidity(date, major, cr)) {
+            int credits = Integer.parseInt(cr);
+
+            Student s = new TriState(new Profile(lname, fname, d), getMajor(major), credits, state);
+
+            if(!roster.contains(s)) {
+                roster.add(s);
+
+                if (print)
+                    System.out.println(fname + " " + lname + " " + date + " added to the roster.");
+            }
+            else if (print) {
+                System.out.println(fname + " " + lname + " " + date + " is already in the roster.");
+            }
+        }
+    }
+
+    /**
+     * Adds an International object to the Roster array
+     * @param fname First name of the student
+     * @param lname Last name of the student
+     * @param date Date of birth of the student
+     * @param major Student's major
+     * @param cr Number of credits the student has completed (in a String)
+     */
+    private void addI(String fname, String lname, String date, String major, String cr, String abroad, boolean print) {
+        Date d = new Date(date);
+        boolean abroad_bool;
+
+        if (abroad.equalsIgnoreCase("true") || abroad.equalsIgnoreCase("false")) {
+            abroad_bool = Boolean.valueOf(abroad);
+        } else {
+            System.out.println("Invalid token: " + abroad);
+            return;
+        }
+
+        if (checkValidity(date, major, cr)) {
+            int credits = Integer.parseInt(cr);
+
+            Student s = new International(new Profile(lname, fname, d), getMajor(major), credits, abroad_bool);
+
+            if(!roster.contains(s)) {
+                roster.add(s);
+
+                if (print)
+                    System.out.println(fname + " " + lname + " " + date + " added to the roster.");
+            }
+            else if (print) {
+                System.out.println(fname + " " + lname + " " + date + " is already in the roster.");
+            }
+        }
+    }
+
+    private void addList(String filename) {
+        try {
+            Scanner scanner = new Scanner(new File(filename));
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                StringTokenizer tokens = new StringTokenizer(line, ",");
+                String status = tokens.nextToken();
+                switch (status) {
+                    case "R" ->
+                        addR(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), false);
+                    case "N" ->
+                        addN(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), false);
+                    case "T" ->
+                        addT(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), false);
+                    case "I" -> {
+                        if (tokens.countTokens() == 5) {
+                            addT(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), "false", false);
+                        } else if (tokens.countTokens() == 6) {
+                            addT(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), false);
+                        }
+                    }
+                    default -> {
+                    }
+                }
+            }
+            
+        } catch (FileNotFoundException ex) {
+            System.out.println("File not found: " + filename);
         }
     }
 
@@ -164,7 +338,7 @@ public class TuitionManager {
      * @param date Date of birth of the student
      */
     private void remove(String fname, String lname, String date) {
-        Student s = new Student(new Profile(lname, fname, new Date(date)), Major.CS, 0);
+        Resident s = new Resident(new Profile(lname, fname, new Date(date)), Major.CS, 0);
         if(roster.remove(s)) {
             System.out.println(fname + " " + lname + " " + date + " removed from the roster.");
         }
@@ -222,20 +396,20 @@ public class TuitionManager {
      * @param date Date of birth of the student to be accessed.
      * @param major New major for the student.
      */
-//    private void change(String fname, String lname, String date, String major) {
-//        if(getMajor(major) == null) {
-//            System.out.println("Major code invalid: " + major);
-//        }
-//        else {
-//            Student s = new Student(new Profile(lname, fname, new Date(date)), getMajor(major), 0);
-//            if(roster.changeMajor(s, getMajor(major)) != Constants.NOT_FOUND) {
-//                System.out.println(fname + " " + lname + " " + date + " major changed to " + major);
-//            }
-//            else {
-//                System.out.println(fname + " " + lname + " " + date + " is not in the roster.");
-//            }
-//        }
-//    }
+    private void change(String fname, String lname, String date, String major) {
+        if(getMajor(major) == null) {
+            System.out.println("Major code invalid: " + major);
+        }
+        else {
+            Student s = new Resident(new Profile(lname, fname, new Date(date)), getMajor(major), 0);
+            if(roster.changeMajor(s, getMajor(major)) != Constants.NOT_FOUND) {
+                System.out.println(fname + " " + lname + " " + date + " major changed to " + major);
+            }
+            else {
+                System.out.println(fname + " " + lname + " " + date + " is not in the roster.");
+            }
+        }
+    }
 
     /**
      * Obtains the Major enum based on the inputted string.

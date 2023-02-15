@@ -1,11 +1,10 @@
 package roster;
 
 public class Resident extends Student {
-    private int scholarship;
+    private int scholarship = 0;
 
-    public Resident(Profile profile, Major major, int creditCompleted, int scholarship) {
+    public Resident(Profile profile, Major major, int creditCompleted) {
         super(profile, major, creditCompleted);
-        this.scholarship = scholarship;
     }
 
     @Override
