@@ -136,8 +136,12 @@ public class TuitionManager {
                 }
                 break;
             case "E":
-                if (tokens.countTokens() == 5) {
-
+                if (tokens.countTokens() == 4) {
+                    enroll(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken());
+                } else if (tokens.countTokens() < 4) {
+                    System.out.println("Missing data in line command.");
+                } else {
+                    System.out.println("Invalid number of arguments.");
                 }
                 break;
             case "D":
@@ -181,22 +185,54 @@ public class TuitionManager {
         }
     }
 
-    private boolean checkValidity(String date, String major, String cr) {
+    private int checkDateValid(String date) {
         Date d = new Date(date);
 
         if (!d.isValid()) {
+            return -1;
+        } else if (d.isUnderage()) {
+            return -2;
+        }
+
+        return 0;
+    }
+
+    private int checkCreditsValid(String cr) {
+        if (!cr.matches("-?[0-9]+")) {
+            return -1;
+        } else if (cr.matches("-[0-9]+")) {
+            return -2;
+        }
+
+        return 0;
+    }
+
+    private int checkMajorValid(String major) {
+        if (getMajor(major) == null) {
+            return -1;
+        }
+
+        return 0;
+    }
+
+    private boolean checkValidityAdd(String date, String major, String cr) {
+        int checkDate = checkDateValid(date);
+        int checkMajor = checkMajorValid(major);
+        int checkCredits = checkCreditsValid(cr);
+
+        if (checkDate == -1) {
             System.out.println("DOB invalid: " + date + " not a valid calendar date!");
             return false;
-        } else if (d.isUnderage()) {
+        } else if (checkDate == -2) {
             System.out.println("DOB invalid: " + date + " younger than 16 years old.");
             return false;
-        } else if (!cr.matches("-?[0-9]+")) {
+        } else if (checkCredits == -1) {
             System.out.println("Credits completed invalid: not an integer!");
             return false;
-        } else if (cr.matches("-[0-9]+")) {
+        } else if (checkCredits == -2) {
             System.out.println("Credit completed invalid: cannot be negative!");
             return false;
-        } else if (getMajor(major) == null) {
+        } else if (checkMajor == -1) {
             System.out.println("Major code invalid: " + major);
             return false;
         }
@@ -215,7 +251,7 @@ public class TuitionManager {
     private void addR(String fname, String lname, String date, String major, String cr, boolean print) {
         Date d = new Date(date);
 
-        if (checkValidity(date, major, cr)) {
+        if (checkValidityAdd(date, major, cr)) {
             int credits = Integer.parseInt(cr);
 
             Student s = new Resident(new Profile(lname, fname, d), getMajor(major), credits);
@@ -243,7 +279,7 @@ public class TuitionManager {
     private void addN(String fname, String lname, String date, String major, String cr, boolean print) {
         Date d = new Date(date);
 
-        if (checkValidity(date, major, cr)) {
+        if (checkValidityAdd(date, major, cr)) {
             int credits = Integer.parseInt(cr);
 
             Student s = new NonResident(new Profile(lname, fname, d), getMajor(major), credits);
@@ -271,7 +307,7 @@ public class TuitionManager {
     private void addT(String fname, String lname, String date, String major, String cr, String state, boolean print) {
         Date d = new Date(date);
 
-        if (checkValidity(date, major, cr)) {
+        if (checkValidityAdd(date, major, cr)) {
             int credits = Integer.parseInt(cr);
 
             Student s = new TriState(new Profile(lname, fname, d), getMajor(major), credits, state);
@@ -307,7 +343,7 @@ public class TuitionManager {
             return;
         }
 
-        if (checkValidity(date, major, cr)) {
+        if (checkValidityAdd(date, major, cr)) {
             int credits = Integer.parseInt(cr);
 
             Student s = new International(new Profile(lname, fname, d), getMajor(major), credits, abroad_bool);
@@ -462,7 +498,7 @@ public class TuitionManager {
         }
     }
 
-    private void enroll() {
+    private void enroll(String fname, String lname, String date, String credits) {
         
     }
 
