@@ -221,6 +221,8 @@ public class TuitionManager {
     }
 
     private boolean checkValidityAdd(String date, String major, String cr) {
+        boolean date_valid = checkDateValid(date);
+        
 
         if (checkDateValid(date) < 0 || checkMajorValid(major) < 0 || checkCreditsValid(cr) < 0)
             return false;
@@ -456,7 +458,6 @@ public class TuitionManager {
             else {
                 System.out.println(fname + " " + lname + " " + date + " is not in the roster.");
             }
-            }
         }
     }
 
@@ -487,17 +488,41 @@ public class TuitionManager {
         }
     }
 
-    private void enroll(String fname, String lname, String date, String credits) {
-        if (checkDateValid(date) < 0) {
+    private boolean checkValidityCreditsEnroll(int status, int credits) {
+        if (status == 0 || status == 1 || status == 2) {
+            if (credits >= 3 && credits <= 24) {
+                return true;
+            } else {
+
+            }
+        } else if (status == 3) {
+            if (credits >= 3 && credits <= 12) {
+                return true;
+            } else {
+
+            }
+        } else if (status == 4) {
+            if (credits >= 12 && credits <= 24) {
+                return true;
+            } else {
+
+            }
+        }
+
+        return false;
+    }
+
+    private void enroll(String fname, String lname, String date, String cr) {
+        if (checkDateValid(date) < 0 || checkCreditsValid(cr) < 0) {
             return;
         }
 
         Date d = new Date(date);
+        int credits = Integer.parseInt(cr);
         int status = roster.checkStatus(new Profile(lname, fname, d));
 
-        switch (status) {
-            case 0 ->
-        }
+        if (status == -1 || !checkValidityCreditsEnroll(status, credits))
+            return;
     }
 
     private void dropEnroll(String fname, String lname, String date) {

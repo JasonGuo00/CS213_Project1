@@ -41,4 +41,7 @@ public class International extends NonResident {
         return false;
     }
 
+    public boolean isStudyAbroad() {
+        return isStudyAbroad;
+    }
 }

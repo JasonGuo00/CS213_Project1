@@ -279,7 +279,11 @@ public class Roster {
                 } else if (roster[i] instanceof TriState) {
                     return 2;
                 } else if (roster[i] instanceof International) {
-                    return 3;
+                    if (((International)roster[i]).isStudyAbroad()) {
+                        return 3;
+                    } else {
+                        return 4;
+                    }
                 } else {
                     return -1;
                 }
