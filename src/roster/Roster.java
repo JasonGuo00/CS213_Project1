@@ -266,4 +266,26 @@ public class Roster {
             return 1;
         }
     }
+
+    public int checkStatus (Profile prof) {
+        Resident check = new Resident(prof, Major.CS, 0);
+
+        for (int i = 0; i < roster.length; i++) {
+            if (check.compareTo(roster[i]) == 0) {
+                if (roster[i] instanceof Resident) {
+                    return 0;
+                } else if (roster[i] instanceof NonResident) {
+                    return 1;
+                } else if (roster[i] instanceof TriState) {
+                    return 2;
+                } else if (roster[i] instanceof International) {
+                    return 3;
+                } else {
+                    return -1;
+                }
+            }
+        }
+
+        return -1;
+    }
 }

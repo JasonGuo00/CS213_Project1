@@ -189,8 +189,10 @@ public class TuitionManager {
         Date d = new Date(date);
 
         if (!d.isValid()) {
+            System.out.println("DOB invalid: " + date + " not a valid calendar date!");
             return -1;
         } else if (d.isUnderage()) {
+            System.out.println("DOB invalid: " + date + " younger than 16 years old.");
             return -2;
         }
 
@@ -199,8 +201,10 @@ public class TuitionManager {
 
     private int checkCreditsValid(String cr) {
         if (!cr.matches("-?[0-9]+")) {
+            System.out.println("Credits completed invalid: not an integer!");
             return -1;
         } else if (cr.matches("-[0-9]+")) {
+            System.out.println("Credit completed invalid: cannot be negative!");
             return -2;
         }
 
@@ -209,6 +213,7 @@ public class TuitionManager {
 
     private int checkMajorValid(String major) {
         if (getMajor(major) == null) {
+            System.out.println("Major code invalid: " + major);
             return -1;
         }
 
@@ -216,26 +221,9 @@ public class TuitionManager {
     }
 
     private boolean checkValidityAdd(String date, String major, String cr) {
-        int checkDate = checkDateValid(date);
-        int checkMajor = checkMajorValid(major);
-        int checkCredits = checkCreditsValid(cr);
 
-        if (checkDate == -1) {
-            System.out.println("DOB invalid: " + date + " not a valid calendar date!");
+        if (checkDateValid(date) < 0 || checkMajorValid(major) < 0 || checkCreditsValid(cr) < 0)
             return false;
-        } else if (checkDate == -2) {
-            System.out.println("DOB invalid: " + date + " younger than 16 years old.");
-            return false;
-        } else if (checkCredits == -1) {
-            System.out.println("Credits completed invalid: not an integer!");
-            return false;
-        } else if (checkCredits == -2) {
-            System.out.println("Credit completed invalid: cannot be negative!");
-            return false;
-        } else if (checkMajor == -1) {
-            System.out.println("Major code invalid: " + major);
-            return false;
-        }
 
         return true;
     }
@@ -468,6 +456,7 @@ public class TuitionManager {
             else {
                 System.out.println(fname + " " + lname + " " + date + " is not in the roster.");
             }
+            }
         }
     }
 
@@ -499,7 +488,16 @@ public class TuitionManager {
     }
 
     private void enroll(String fname, String lname, String date, String credits) {
-        
+        if (checkDateValid(date) < 0) {
+            return;
+        }
+
+        Date d = new Date(date);
+        int status = roster.checkStatus(new Profile(lname, fname, d));
+
+        switch (status) {
+            case 0 ->
+        }
     }
 
     private void dropEnroll(String fname, String lname, String date) {
