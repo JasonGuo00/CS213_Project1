@@ -84,6 +84,11 @@ public abstract class Student implements Comparable<Student>{
         }
     }
 
+    public void addCredits(int credits) {
+        creditCompleted += credits;
+        return;
+    }
+
     /**
      * Overrides compareTo method, compares the portfolios of the two students.
      * @param student the object to be compared.

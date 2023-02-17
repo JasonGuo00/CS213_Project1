@@ -30,4 +30,8 @@ public class EnrollStudent  {
     public int getCredits() {
         return creditsEnrolled;
     }
+
+    public Profile getProfile() {
+        return profile;
+    }
 }

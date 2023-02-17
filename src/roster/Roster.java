@@ -292,4 +292,13 @@ public class Roster {
 
         return -1;
     }
+
+    public Student getStudent(Student student) {
+        for (int i = 0; i < size; i++) {
+            if (student.equals(roster[i])) {
+                return roster[i];
+            }
+        }
+        return null;
+    }
 }

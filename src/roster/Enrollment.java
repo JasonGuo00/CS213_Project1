@@ -59,4 +59,17 @@ public class Enrollment {
             System.out.println(enrollStudents[i].toString());
         }
     }
+
+    public EnrollStudent[] getEnrollStudents() {
+        return enrollStudents;
+    }
+
+    public EnrollStudent getStudent(EnrollStudent student) {
+        for (int i = 0; i < size; i++) {
+            if (student.equals(enrollStudents[i])) {
+                return enrollStudents[i];
+            }
+        }
+        return null;
+    }
 }

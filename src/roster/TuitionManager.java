@@ -185,51 +185,6 @@ public class TuitionManager {
         }
     }
 
-    private int checkDateValid(String date) {
-        Date d = new Date(date);
-
-        if (!d.isValid()) {
-            System.out.println("DOB invalid: " + date + " not a valid calendar date!");
-            return -1;
-        } else if (d.isUnderage()) {
-            System.out.println("DOB invalid: " + date + " younger than 16 years old.");
-            return -2;
-        }
-
-        return 0;
-    }
-
-    private int checkCreditsValid(String cr) {
-        if (!cr.matches("-?[0-9]+")) {
-            System.out.println("Credits completed invalid: not an integer!");
-            return -1;
-        } else if (cr.matches("-[0-9]+")) {
-            System.out.println("Credit completed invalid: cannot be negative!");
-            return -2;
-        }
-
-        return 0;
-    }
-
-    private int checkMajorValid(String major) {
-        if (getMajor(major) == null) {
-            System.out.println("Major code invalid: " + major);
-            return -1;
-        }
-
-        return 0;
-    }
-
-    private boolean checkValidityAdd(String date, String major, String cr) {
-        boolean date_valid = checkDateValid(date);
-        
-
-        if (checkDateValid(date) < 0 || checkMajorValid(major) < 0 || checkCreditsValid(cr) < 0)
-            return false;
-
-        return true;
-    }
-
     /**
      * Adds a Resident object to the Roster array
      * @param fname First name of the student
@@ -488,24 +443,86 @@ public class TuitionManager {
         }
     }
 
+    private int checkDateValid(String date) {
+        Date d = new Date(date);
+
+        if (!d.isValid()) {
+            return -1;
+        } else if (d.isUnderage()) {
+            return -2;
+        }
+
+        return 0;
+    }
+
+    private int checkCreditsValid(String cr) {
+        if (!cr.matches("-?[0-9]+")) {
+            return -1;
+        } else if (cr.matches("-[0-9]+")) {
+            return -2;
+        }
+
+        return 0;
+    }
+
+    private int checkMajorValid(String major) {
+        if (getMajor(major) == null) {
+            return -1;
+        }
+
+        return 0;
+    }
+
+    private boolean checkValidityAdd(String date, String major, String cr) {
+        int date_valid = checkDateValid(date);
+        int credits_valid = checkCreditsValid(cr);
+        int major_valid = checkMajorValid(major);
+
+        if (date_valid == -1) {
+            System.out.println("DOB invalid: " + date + " not a valid calendar date!");
+        } else if (date_valid == -2) {
+            System.out.println("DOB invalid: " + date + " younger than 16 years old.");
+        } else if (credits_valid == -1) {
+            System.out.println("Credits completed invalid: not an integer!");
+        } else if (credits_valid == -2) {
+            System.out.println("Credit completed invalid: cannot be negative!");
+        } else if (major_valid == -1) {
+            System.out.println("Major code invalid: " + major);
+        }
+
+        return date_valid >= 0 && major_valid >= 0 && credits_valid >= 0;
+    }
+
     private boolean checkValidityCreditsEnroll(int status, int credits) {
-        if (status == 0 || status == 1 || status == 2) {
+        if (status == 0) {
             if (credits >= 3 && credits <= 24) {
                 return true;
             } else {
-
+                System.out.println("(Resident) " + credits + ": invalid credit hours.");
+            }
+        } else if (status == 1) {
+            if (credits >= 3 && credits <= 24) {
+                return true;
+            } else {
+                System.out.println("(Non-Resident) " + credits + ": invalid credit hours.");
+            }
+        } else if (status == 2) {
+            if (credits >= 3 && credits <= 24) {
+                return true;
+            } else {
+                System.out.println("(Tristate) " + credits + ": invalid credit hours.");
             }
         } else if (status == 3) {
             if (credits >= 3 && credits <= 12) {
                 return true;
             } else {
-
+                System.out.println("(International studentstudy abroad) " + credits + ": invalid credit hours.");
             }
         } else if (status == 4) {
             if (credits >= 12 && credits <= 24) {
                 return true;
             } else {
-
+                System.out.println("(International student) " + credits + ": invalid credit hours.");
             }
         }
 
@@ -523,17 +540,56 @@ public class TuitionManager {
 
         if (status == -1 || !checkValidityCreditsEnroll(status, credits))
             return;
+
+        enrollment.add(new EnrollStudent(lname, fname, d, credits));
     }
 
     private void dropEnroll(String fname, String lname, String date) {
+        if (checkDateValid(date) < 0) {
+            return;
+        }
+
         Date d = new Date(date);
 
         enrollment.remove(new EnrollStudent(fname, lname, d, 0));
     }
 
     private void awardScholarship(String fname, String lname, String date, String scholarship) {
-        Date d = new Date(date);
+        int date_valid = checkDateValid(date);
+        int scholarship_valid = checkCreditsValid(scholarship);
 
+        if (date_valid == -1) {
+            System.out.println("DOB invalid: " + date + " not a valid calendar date!");
+        } else if (date_valid == -2) {
+            System.out.println("DOB invalid: " + date + " younger than 16 years old.");
+        } else if (scholarship_valid == -1) {
+            System.out.println("Amount is not an integer");
+        }
+
+        if (date_valid < 0 || scholarship_valid < 0) {
+            return;
+        }
+
+        Date d = new Date(date);
+        int scholarship_value = Integer.parseInt(scholarship);
+
+        if (scholarship_value < 1 || scholarship_value > 10000) {
+            System.out.println(Integer.toString(scholarship_value) + ": invalid amount.");
+            return;
+        }
+
+        Student student = roster.getStudent(new Resident(new Profile(lname, fname, d), Major.CS, 0));
+        EnrollStudent student_enroll = enrollment.getStudent(new EnrollStudent(lname, fname, d, 0));
+
+        if (student_enroll == null) {
+            System.out.println(fname + lname + date + " is not in the roster.");
+            return;
+        } else if (student instanceof NonResident) {
+            System.out.println(fname + lname + date + " (Non-Resident) is not eligible for the scholarship.");
+            return;
+        } else if (student_enroll.getCredits() < 12) {
+            System.out.println(fname + lname + date + " part time student is not eligible for the scholarship.");
+        }
     }
 
     private void printEnrollment() {
@@ -545,6 +601,13 @@ public class TuitionManager {
     }
 
     private void semesterEnd() {
+        EnrollStudent[] students = enrollment.getEnrollStudents();
 
+        for (int i = 0; i < students.length; i++) {
+            Student student = roster.getStudent(new Resident(students[i].getProfile(), Major.CS, 0));
+            if (student != null) {
+                student.addCredits(students[i].getCredits());
+            }
+        }
     }
 }
