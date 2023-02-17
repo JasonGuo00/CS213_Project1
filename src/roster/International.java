@@ -53,4 +53,17 @@ public class International extends NonResident {
             return "International student";
         }
     }
+
+    /**
+     * Overrides the toString method.
+     * @return Returns the name, d.o.b, major code, major, school, credits completed, and seniority of the student
+     */
+    @Override
+    public String toString() {
+        if (isStudyAbroad) {
+            return (super.toString() + "(international:study abroad)");
+        } else {
+            return (super.toString() + "(international)");
+        }
+    }
 }

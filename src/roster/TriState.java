@@ -43,4 +43,13 @@ public class TriState extends NonResident{
     public String getStatus() {
         return "Tri-state " + state;
     }
+
+    /**
+     * Overrides the toString method.
+     * @return Returns the name, d.o.b, major code, major, school, credits completed, and seniority of the student
+     */
+    @Override
+    public String toString() {
+        return (super.toString() + "(tri-state:" + state + ")");
+    }
 }

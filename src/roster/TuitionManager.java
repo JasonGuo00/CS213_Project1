@@ -1,6 +1,7 @@
 package roster;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.DecimalFormat;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
@@ -38,7 +39,7 @@ public class TuitionManager {
                 }
             }
         }
-        System.out.println("Roster Manager terminated.");
+        System.out.println("Tuition Manager terminated.");
     }
 
     /**
@@ -75,7 +76,7 @@ public class TuitionManager {
                 } else if (tokens.countTokens() == 5) {
                     System.out.println("Missing the state code.");
                 } else {
-                    System.out.println("Missing data in command line.");
+                    System.out.println("Missing data in line command.");
                 }
                 break;
             case "AI":
@@ -99,21 +100,21 @@ public class TuitionManager {
                 break;
             case "P":
                 if (roster.getSize() == 0) {
-                    System.out.println("Student Roster is empty!");
+                    System.out.println("Student roster is empty!");
                 } else {
                     pname();
                 }
                 break;
             case "PS":
                 if (roster.getSize() == 0) {
-                    System.out.println("Student Roster is empty!");
+                    System.out.println("Student roster is empty!");
                 } else {
                     pstanding();
                 }
                 break;
             case "PC":
                 if (roster.getSize() == 0) {
-                    System.out.println("Student Roster is empty!");
+                    System.out.println("Student roster is empty!");
                 } else {
                     pschool();
                 }
@@ -121,7 +122,7 @@ public class TuitionManager {
             case "L":
                 if (tokens.countTokens() == Constants.ARGUMENTS_L) {
                     if (roster.getSize() == 0) {
-                        System.out.println("Student Roster is empty!");
+                        System.out.println("Student roster is empty!");
                     } else {
                         list(tokens.nextToken());
                     }
@@ -180,7 +181,7 @@ public class TuitionManager {
             case "PT":
                 if (tokens.countTokens() == 0) {
                     if (roster.getSize() == 0) {
-                        System.out.println("Student Roster is empty!");
+                        System.out.println("Student roster is empty!");
                     } else {
                         printTuition();
                     }
@@ -270,6 +271,7 @@ public class TuitionManager {
 
         if (!state.toUpperCase().equals("NY") && !state.toUpperCase().equals("CT")) {
             System.out.println(state + ": Invalid state code.");
+            return;
         }
 
         if (checkValidityAdd(date, major, cr)) {
@@ -299,7 +301,7 @@ public class TuitionManager {
      */
     private void addI(String fname, String lname, String date, String major, String cr, String abroad, boolean print) {
         Date d = new Date(date);
-        boolean abroad_bool;
+        boolean abroad_bool = false;
 
         if (abroad.equalsIgnoreCase("true") || abroad.equalsIgnoreCase("false")) {
             abroad_bool = Boolean.valueOf(abroad);
@@ -370,7 +372,7 @@ public class TuitionManager {
             System.out.println(fname + " " + lname + " " + date + " removed from the roster.");
         }
         else {
-            System.out.println(fname + " " + lname + " " + date + " is not on the roster.");
+            System.out.println(fname + " " + lname + " " + date + " is not in the roster.");
         }
     }
 
@@ -378,27 +380,27 @@ public class TuitionManager {
      * Displays students on the roster sorted by last name, first name, and date of birth.
      */
     private void pname() {
-        System.out.println("* Student roster sorted by last name, first name, DOB **");
+        System.out.println("** Student roster sorted by last name, first name, DOB **");
         roster.print();
-        System.out.println("* end of roster **");
+        System.out.println("* end of roster *");
     }
 
     /**
      * Displays students on the roster sorted by school and major.
      */
     private void pschool() {
-        System.out.println("* Student roster sorted by school, major **");
+        System.out.println("** Student roster sorted by school, major **");
         roster.printBySchoolMajor();
-        System.out.println("* end of roster **");
+        System.out.println("* end of roster *");
     }
 
     /**
      * Displays students on the roster sorted by their standing.
      */
     private void pstanding(){
-        System.out.println("* Student roster sorted by standing **");
+        System.out.println("** Student roster sorted by standing **");
         roster.printByStanding();
-        System.out.println("* end of roster **");
+        System.out.println("* end of roster *");
     }
 
     /**
@@ -507,7 +509,7 @@ public class TuitionManager {
         } else if (credits_valid == -1) {
             System.out.println("Credits completed invalid: not an integer!");
         } else if (credits_valid == -2) {
-            System.out.println("Credit completed invalid: cannot be negative!");
+            System.out.println("Credits completed invalid: cannot be negative!");
         } else if (major_valid == -1) {
             System.out.println("Major code invalid: " + major);
         }
@@ -591,8 +593,15 @@ public class TuitionManager {
         }
 
         Date d = new Date(date);
+        EnrollStudent student = new EnrollStudent(fname, lname, d, 0);
 
-        enrollment.remove(new EnrollStudent(fname, lname, d, 0));
+        if (enrollment.getStudent(student) == null) {
+            System.out.println(student.getProfile().toString() + " is not enrolled.");
+            return;
+        }
+
+        enrollment.remove(student);
+        System.out.println(student.getProfile().toString() + " dropped.");
     }
 
     private void awardScholarship(String fname, String lname, String date, String scholarship) {
@@ -623,40 +632,54 @@ public class TuitionManager {
         EnrollStudent student_enroll = enrollment.getStudent(new EnrollStudent(lname, fname, d, 0));
 
         if (student_enroll == null) {
-            System.out.println(fname + lname + date + " is not in the roster.");
+            System.out.println(fname + " " +  lname + " " +  date + " is not in the roster.");
             return;
         } else if (student instanceof NonResident) {
-            System.out.println(fname + lname + date + " (" + student.getStatus() + ") is not eligible for the scholarship.");
+            System.out.println(fname + " " +  lname + " " +  date + " (" + student.getStatus() + ") is not eligible for the scholarship.");
             return;
         } else if (student_enroll.getCredits() < 12) {
-            System.out.println(fname + lname + date + " part time student is not eligible for the scholarship.");
+            System.out.println(fname + " " +  lname + " " +  date + " part time student is not eligible for the scholarship.");
             return;
         }
 
         ((Resident)student).setScholarship(scholarship_value);
+        System.out.println(student.getProfile().toString() + ": scholarship amount updated.");
     }
 
     private void printEnrollment() {
         EnrollStudent[] students = enrollment.getEnrollStudents();
 
+        System.out.println("** Enrollment **");
+
         for (int i = 0; i < enrollment.getSize(); i++) {
             System.out.println(students[i].getProfile().toString() + ": credits enrolled: " + students[i].getCredits());
         }
+
+        System.out.println("* end of enrollment *");
     }
 
     private void printTuition() {
         EnrollStudent[] students = enrollment.getEnrollStudents();
 
+        System.out.println("** Tuition due **");
+
         for (int i = 0; i < enrollment.getSize(); i++) {
             Student student = roster.getStudent(new Resident(students[i].getProfile(), Major.CS, 0));
             if (student != null) {
-                System.out.println(student.getProfile().toString() + " (" + student.getStatus() + ") enrolled " + students[i].getCredits() + "credits: tuition due: $" + String.format("%.2f", student.tuitionDue(students[i].getCredits())));
+                    DecimalFormat formatter = new DecimalFormat("#,###.00");
+                String tution = formatter.format(student.tuitionDue(students[i].getCredits()));
+                System.out.println(student.getProfile().toString() + " (" + student.getStatus() + ") enrolled " + students[i].getCredits() + " credits: tuition due: $" + tution);
             }
         }
+
+        System.out.println("* end of tuition due *");
     }
 
     private void semesterEnd() {
         EnrollStudent[] students = enrollment.getEnrollStudents();
+
+        System.out.println("Credit completed has been updated.");
+        System.out.println("** list of students eligible for graduation **");
 
         for (int i = 0; i < enrollment.getSize(); i++) {
             Student student = roster.getStudent(new Resident(students[i].getProfile(), Major.CS, 0));
@@ -664,7 +687,7 @@ public class TuitionManager {
                 student.setCreditCompleted(students[i].getCredits() + student.getCreditCompleted());
 
                 if (student.getCreditCompleted() >= 120) {
-                    System.out.printf(student.toString());
+                    System.out.printf(student.toString() + "\n");
                 }
             }
         }

@@ -274,8 +274,6 @@ public class Roster {
             if (check.compareTo(roster[i]) == 0) {
                 if (roster[i] instanceof Resident) {
                     return 0;
-                } else if (roster[i] instanceof NonResident) {
-                    return 1;
                 } else if (roster[i] instanceof TriState) {
                     return 2;
                 } else if (roster[i] instanceof International) {
@@ -284,6 +282,8 @@ public class Roster {
                     } else {
                         return 4;
                     }
+                } else if (roster[i] instanceof NonResident) {
+                    return 1;
                 } else {
                     return -1;
                 }
