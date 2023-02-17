@@ -72,4 +72,8 @@ public class Enrollment {
         }
         return null;
     }
+
+    public int getSize() {
+        return size;
+    }
 }

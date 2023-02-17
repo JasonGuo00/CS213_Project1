@@ -35,6 +35,7 @@ public abstract class Student implements Comparable<Student>{
     public abstract double tuitionDue(int creditsEnrolled);
     public abstract boolean isResident();
 
+    public abstract String getStatus();
 
     /**
      * Getter for the student's profile.
@@ -84,9 +85,8 @@ public abstract class Student implements Comparable<Student>{
         }
     }
 
-    public void addCredits(int credits) {
-        creditCompleted += credits;
-        return;
+    public void setCreditCompleted(int creditCompleted) {
+        this.creditCompleted = creditCompleted;
     }
 
     /**

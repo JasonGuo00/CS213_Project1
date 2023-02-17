@@ -38,4 +38,9 @@ public class TriState extends NonResident{
         }
         return total;
     }
+
+    @Override
+    public String getStatus() {
+        return "Tri-state " + state;
+    }
 }

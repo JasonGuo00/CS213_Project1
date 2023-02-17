@@ -33,4 +33,17 @@ public class Resident extends Student {
         }
         return total;
     }
+
+    public int getScholarship() {
+        return scholarship;
+    }
+
+    public void setScholarship(int scholarship) {
+        this.scholarship = scholarship;
+    }
+
+    @Override
+    public String getStatus() {
+        return "Resident";
+    }
 }

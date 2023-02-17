@@ -44,4 +44,13 @@ public class International extends NonResident {
     public boolean isStudyAbroad() {
         return isStudyAbroad;
     }
+
+    @Override
+    public String getStatus() {
+        if (isStudyAbroad) {
+            return "International studentstudy abroad";
+        } else {
+            return "International student";
+        }
+    }
 }

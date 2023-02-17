@@ -270,7 +270,7 @@ public class Roster {
     public int checkStatus (Profile prof) {
         Resident check = new Resident(prof, Major.CS, 0);
 
-        for (int i = 0; i < roster.length; i++) {
+        for (int i = 0; i < size; i++) {
             if (check.compareTo(roster[i]) == 0) {
                 if (roster[i] instanceof Resident) {
                     return 0;

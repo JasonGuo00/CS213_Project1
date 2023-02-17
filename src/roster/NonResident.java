@@ -31,4 +31,9 @@ public class NonResident extends Student {
         }
         return total;
     }
+
+    @Override
+    public String getStatus() {
+        return "Resident";
+    }
 }
