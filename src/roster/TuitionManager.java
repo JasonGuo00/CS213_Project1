@@ -52,7 +52,10 @@ public class TuitionManager {
      */
     private void interpreter(String input, StringTokenizer tokens) {
         switch (input) {
-            case "AR":
+            case "A" -> {
+                findStatus(tokens);
+            }
+            case "AR" -> {
                 if (tokens.countTokens() == 5) {
                     addR(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), true);
                 } else if (tokens.countTokens() < 5) {
@@ -60,8 +63,8 @@ public class TuitionManager {
                 } else {
                     System.out.println("Invalid number of arguments.");
                 }
-                break;
-            case "AN":
+            }
+            case "AN" -> {
                 if (tokens.countTokens() == 5) {
                     addN(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), true);
                 } else if (tokens.countTokens() < 5) {
@@ -69,17 +72,19 @@ public class TuitionManager {
                 } else {
                     System.out.println("Invalid number of arguments.");
                 }
-                break;
-            case "AT":
+            }
+            case "AT" -> {
                 if (tokens.countTokens() == 6) {
                     addT(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), true);
                 } else if (tokens.countTokens() == 5) {
                     System.out.println("Missing the state code.");
+                } else if (tokens.countTokens() == 3) {
+                    System.out.println("Missing data in command line.");
                 } else {
                     System.out.println("Missing data in line command.");
                 }
-                break;
-            case "AI":
+            }
+            case "AI" -> {
                 if (tokens.countTokens() == 5) {
                     addI(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), "false", true);
                 } else if (tokens.countTokens() == 6) {
@@ -89,37 +94,36 @@ public class TuitionManager {
                 } else {
                     System.out.println("Invalid number of arguments.");
                 }
-                break;
-            case "R":
+            }
+            case "R" -> {
                 if (tokens.countTokens() == Constants.ARGUMENTS_R) {
                     remove(tokens.nextToken(), tokens.nextToken(), tokens.nextToken());
                 } else {
                     System.out.println("Invalid number of arguments.");
                 }
-
-                break;
-            case "P":
+            }
+            case "P" -> {
                 if (roster.getSize() == 0) {
                     System.out.println("Student roster is empty!");
                 } else {
                     pname();
                 }
-                break;
-            case "PS":
+            }
+            case "PS" -> {
                 if (roster.getSize() == 0) {
                     System.out.println("Student roster is empty!");
                 } else {
                     pstanding();
                 }
-                break;
-            case "PC":
+            }
+            case "PC" -> {
                 if (roster.getSize() == 0) {
                     System.out.println("Student roster is empty!");
                 } else {
                     pschool();
                 }
-                break;
-            case "L":
+            }
+            case "L" -> {
                 if (tokens.countTokens() == Constants.ARGUMENTS_L) {
                     if (roster.getSize() == 0) {
                         System.out.println("Student roster is empty!");
@@ -129,22 +133,22 @@ public class TuitionManager {
                 } else {
                     System.out.println("Invalid number of arguments.");
                 }
-                break;
-            case "C":
+            }
+            case "C" -> {
                 if (tokens.countTokens() == Constants.ARGUMENTS_C) {
                     change(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken());
                 } else {
                     System.out.println("Invalid number of arguments.");
                 }
-                break;
-            case "LS":
+            }
+            case "LS" -> {
                 if (tokens.countTokens() == 1) {
                     addList(tokens.nextToken());
                 } else {
                     System.out.println("Invalid number of arguments.");
                 }
-                break;
-            case "E":
+            }
+            case "E" -> {
                 if (tokens.countTokens() == 4) {
                     enroll(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken());
                 } else if (tokens.countTokens() < 4) {
@@ -152,22 +156,46 @@ public class TuitionManager {
                 } else {
                     System.out.println("Invalid number of arguments.");
                 }
-                break;
-            case "D":
+            }
+            case "D" -> {
                 if (tokens.countTokens() == 3) {
                     dropEnroll(tokens.nextToken(), tokens.nextToken(), tokens.nextToken());
                 } else {
                     System.out.println("Invalid number of arguments.");
                 }
-                break;
-            case "S":
-                if (tokens.countTokens() == 4) {
-                    awardScholarship(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken());
+            }
+            case "S" -> {
+                if (tokens.countTokens() < 3) {
+                    System.out.println("Missing data in line command.");
                 } else {
-                    System.out.println("Invalid number of arguments.");
+                    String fname = tokens.nextToken();
+                    String lname = tokens.nextToken();
+                    String date = tokens.nextToken();
+
+
+                    if (!checkDateValid(date)) {
+                        return;
+                    }
+
+                    Date d = new Date(date);
+                    Profile profile = new Profile(lname, fname, d);
+                    Student student = roster.getStudent(new Resident(profile, Major.CS, 0));
+
+                    if (student == null) {
+                        System.out.println(profile.toString() + " is not in the roster.");
+                        return;
+                    }
+
+                    if (tokens.countTokens() == 1) {
+                        awardScholarship(fname, lname, date, tokens.nextToken());
+                    } else if (tokens.countTokens() < 1) {
+                        System.out.println("Missing data in line command.");
+                    } else {
+                        System.out.println("Invalid number of arguments.");
+                    }
                 }
-                break;
-            case "PE":
+            }
+            case "PE" -> {
                 if (tokens.countTokens() == 0) {
                     if (enrollment.getSize() == 0) {
                         System.out.println("Enrollment is empty!");
@@ -177,8 +205,8 @@ public class TuitionManager {
                 } else {
                     System.out.println("Invalid number of arguments.");
                 }
-                break;
-            case "PT":
+            }
+            case "PT" -> {
                 if (tokens.countTokens() == 0) {
                     if (roster.getSize() == 0) {
                         System.out.println("Student roster is empty!");
@@ -188,17 +216,15 @@ public class TuitionManager {
                 } else {
                     System.out.println("Invalid number of arguments.");
                 }
-                break;
-            case "SE":
+            }
+            case "SE" -> {
                 if (tokens.countTokens() == 0) {
                     semesterEnd();
                 } else {
                     System.out.println("Invalid number of arguments.");
                 }
-                break;
-            default:
-                System.out.println(input + " is an invalid command!");
-                break;
+            }
+            default -> System.out.println(input + " is an invalid command!");
         }
     }
 
@@ -211,9 +237,8 @@ public class TuitionManager {
      * @param cr Number of credits the student has completed (in a String)
      */
     private void addR(String fname, String lname, String date, String major, String cr, boolean print) {
-        Date d = new Date(date);
-
-        if (checkValidityAdd(date, major, cr)) {
+        if (checkDateValid(date) && checkMajorValid(major) && checkCreditsCompletedValid(cr)) {
+            Date d = new Date(date);
             int credits = Integer.parseInt(cr);
 
             Student s = new Resident(new Profile(lname, fname, d), getMajor(major), credits);
@@ -223,8 +248,7 @@ public class TuitionManager {
 
                 if (print)
                     System.out.println(fname + " " + lname + " " + date + " added to the roster.");
-            }
-            else if (print) {
+            } else if (print) {
                 System.out.println(fname + " " + lname + " " + date + " is already in the roster.");
             }
         }
@@ -239,9 +263,8 @@ public class TuitionManager {
      * @param cr Number of credits the student has completed (in a String)
      */
     private void addN(String fname, String lname, String date, String major, String cr, boolean print) {
-        Date d = new Date(date);
-
-        if (checkValidityAdd(date, major, cr)) {
+        if (checkDateValid(date) && checkMajorValid(major) && checkCreditsCompletedValid(cr)) {
+            Date d = new Date(date);
             int credits = Integer.parseInt(cr);
 
             Student s = new NonResident(new Profile(lname, fname, d), getMajor(major), credits);
@@ -251,8 +274,7 @@ public class TuitionManager {
 
                 if (print)
                     System.out.println(fname + " " + lname + " " + date + " added to the roster.");
-            }
-            else if (print) {
+            } else if (print) {
                 System.out.println(fname + " " + lname + " " + date + " is already in the roster.");
             }
         }
@@ -267,14 +289,13 @@ public class TuitionManager {
      * @param cr Number of credits the student has completed (in a String)
      */
     private void addT(String fname, String lname, String date, String major, String cr, String state, boolean print) {
-        Date d = new Date(date);
-
-        if (!state.toUpperCase().equals("NY") && !state.toUpperCase().equals("CT")) {
+        if (!state.equalsIgnoreCase("NY") && !state.equalsIgnoreCase("CT")) {
             System.out.println(state + ": Invalid state code.");
             return;
         }
 
-        if (checkValidityAdd(date, major, cr)) {
+        if (checkDateValid(date) && checkMajorValid(major) && checkCreditsCompletedValid(cr)) {
+            Date d = new Date(date);
             int credits = Integer.parseInt(cr);
 
             Student s = new TriState(new Profile(lname, fname, d), getMajor(major), credits, state.toUpperCase());
@@ -284,8 +305,7 @@ public class TuitionManager {
 
                 if (print)
                     System.out.println(fname + " " + lname + " " + date + " added to the roster.");
-            }
-            else if (print) {
+            } else if (print) {
                 System.out.println(fname + " " + lname + " " + date + " is already in the roster.");
             }
         }
@@ -300,17 +320,17 @@ public class TuitionManager {
      * @param cr Number of credits the student has completed (in a String)
      */
     private void addI(String fname, String lname, String date, String major, String cr, String abroad, boolean print) {
-        Date d = new Date(date);
-        boolean abroad_bool = false;
+        boolean abroad_bool;
 
         if (abroad.equalsIgnoreCase("true") || abroad.equalsIgnoreCase("false")) {
-            abroad_bool = Boolean.valueOf(abroad);
+            abroad_bool = Boolean.parseBoolean(abroad);
         } else {
             System.out.println("Invalid token: " + abroad);
             return;
         }
 
-        if (checkValidityAdd(date, major, cr)) {
+        if (checkDateValid(date) && checkMajorValid(major) && checkCreditsCompletedValid(cr)) {
+            Date d = new Date(date);
             int credits = Integer.parseInt(cr);
 
             Student s = new International(new Profile(lname, fname, d), getMajor(major), credits, abroad_bool);
@@ -320,10 +340,36 @@ public class TuitionManager {
 
                 if (print)
                     System.out.println(fname + " " + lname + " " + date + " added to the roster.");
-            }
-            else if (print) {
+            } else if (print) {
                 System.out.println(fname + " " + lname + " " + date + " is already in the roster.");
             }
+        }
+    }
+
+    void findStatus(StringTokenizer tokens) {
+        if (tokens.countTokens() == 5) {
+            String token1 = tokens.nextToken();
+            String token2 = tokens.nextToken();
+            String token3 = tokens.nextToken();
+            String token4 = tokens.nextToken();
+            String token5 = tokens.nextToken();
+
+            addR(token1, token2, token3, token4, token5, true);
+        } else if (tokens.countTokens() == 6) {
+            String token1 = tokens.nextToken();
+            String token2 = tokens.nextToken();
+            String token3 = tokens.nextToken();
+            String token4 = tokens.nextToken();
+            String token5 = tokens.nextToken();
+            String token6 = tokens.nextToken();
+
+            if (token6.equalsIgnoreCase("true") || token6.equalsIgnoreCase("false")) {
+                addI(token1, token2, token3, token4, token5, token6, true);
+            } else {
+                addT(token1, token2, token3, token4, token5, token6, true);
+            }
+        } else {
+            System.out.println("Invalid number of arguments.");
         }
     }
 
@@ -467,133 +513,119 @@ public class TuitionManager {
         }
     }
 
-    private int checkDateValid(String date) {
+    private boolean checkDateValid(String date) {
         Date d = new Date(date);
 
         if (!d.isValid()) {
-            return -1;
-        } else if (d.isUnderage()) {
-            return -2;
-        }
-
-        return 0;
-    }
-
-    private int checkCreditsValid(String cr) {
-        if (!cr.matches("-?[0-9]+")) {
-            return -1;
-        } else if (cr.matches("-[0-9]+")) {
-            return -2;
-        }
-
-        return 0;
-    }
-
-    private int checkMajorValid(String major) {
-        if (getMajor(major) == null) {
-            return -1;
-        }
-
-        return 0;
-    }
-
-    private boolean checkValidityAdd(String date, String major, String cr) {
-        int date_valid = checkDateValid(date);
-        int credits_valid = checkCreditsValid(cr);
-        int major_valid = checkMajorValid(major);
-
-        if (date_valid == -1) {
             System.out.println("DOB invalid: " + date + " not a valid calendar date!");
-        } else if (date_valid == -2) {
+            return false;
+        } else if (d.isUnderage()) {
             System.out.println("DOB invalid: " + date + " younger than 16 years old.");
-        } else if (credits_valid == -1) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private int checkIntValid(String i) {
+        if (!i.matches("-?[0-9]+")) {
+            return -1;
+        } else if (i.matches("-[0-9]+")) {
+            return -2;
+        }
+
+        return 0;
+    }
+
+    private boolean checkCreditsCompletedValid(String i) {
+        int credits_valid = checkIntValid(i);
+
+        if (credits_valid == -1) {
             System.out.println("Credits completed invalid: not an integer!");
+            return false;
         } else if (credits_valid == -2) {
             System.out.println("Credits completed invalid: cannot be negative!");
-        } else if (major_valid == -1) {
-            System.out.println("Major code invalid: " + major);
+            return false;
         }
 
-        return date_valid >= 0 && major_valid >= 0 && credits_valid >= 0;
+        return true;
     }
 
-    private boolean checkValidityCreditsEnroll(int status, int credits) {
-        if (status == 0) {
-            if (credits >= 3 && credits <= 24) {
-                return true;
-            } else {
-                System.out.println("(Resident) " + credits + ": invalid credit hours.");
-            }
-        } else if (status == 1) {
-            if (credits >= 3 && credits <= 24) {
-                return true;
-            } else {
-                System.out.println("(Non-Resident) " + credits + ": invalid credit hours.");
-            }
-        } else if (status == 2) {
-            if (credits >= 3 && credits <= 24) {
-                return true;
-            } else {
-                System.out.println("(Tristate) " + credits + ": invalid credit hours.");
-            }
-        } else if (status == 3) {
-            if (credits >= 3 && credits <= 12) {
-                return true;
-            } else {
-                System.out.println("(International studentstudy abroad) " + credits + ": invalid credit hours.");
-            }
-        } else if (status == 4) {
-            if (credits >= 12 && credits <= 24) {
-                return true;
-            } else {
-                System.out.println("(International student) " + credits + ": invalid credit hours.");
-            }
+    private boolean checkCreditsEnrolledValid(String i) {
+        int credits_valid = checkIntValid(i);
+
+        if (credits_valid == -1) {
+            System.out.println("Credits enrolled is not an integer.");
+            return false;
+        } else if (credits_valid == -2) {
+            System.out.println("Credits enrolled cannot be negative.");
+            return false;
         }
 
-        return false;
+        return true;
+    }
+
+    private boolean checkMajorValid(String major) {
+        if (getMajor(major) == null) {
+            System.out.println("Major code invalid: " + major);
+            return false;
+        }
+
+        return true;
+    }
+
+    public String getStatus(Student student) {
+        if (student instanceof Resident) {
+            return "Resident";
+        } else if (student instanceof TriState) {
+            return "Tri-state " + ((TriState) student).getState();
+        } else if (student instanceof International) {
+            if (((International) student).isStudyAbroad()) {
+                return "International studentstudy abroad";
+            } else {
+                return "International student";
+            }
+        } else if (student instanceof NonResident) {
+            return "Non-Resident";
+        } else {
+            return "";
+        }
     }
 
     private void enroll(String fname, String lname, String date, String cr) {
-        int date_valid = checkDateValid(date);
-        int credits_valid = checkCreditsValid(cr);
-
-        if (date_valid == -1) {
-            System.out.println("DOB invalid: " + date + " not a valid calendar date!");
-            return;
-        } else if (date_valid == -2) {
-            System.out.println("DOB invalid: " + date + " younger than 16 years old.");
-            return;
-        } else if (credits_valid == -1) {
-            System.out.println("Credits enrolled is not an integer.");
-            return;
-        } else if (credits_valid == -2) {
-            System.out.println("Credit enrolled invalid: cannot be negative!");
+        if (!checkCreditsEnrolledValid(cr) || !checkDateValid(date)) {
             return;
         }
 
         Date d = new Date(date);
         int credits = Integer.parseInt(cr);
-        Profile prof = new Profile(lname, fname, d);
-        int status = roster.checkStatus(prof);
+        Profile profile = new Profile(lname, fname, d);
+        Student student = roster.getStudent(new Resident(profile, Major.CS, 0));
+
+        if (student == null) {
+            System.out.println("Cannot enroll: " + profile.toString() + " is not in the roster.");
+            return;
+        }
+
+        int status = roster.checkValid(student, credits);
 
         if (status == -1) {
-            System.out.println("Cannot enroll: " + prof.toString() + " is not in the roster.");
+            System.out.println("(" + getStatus(student) + ") " + credits + ": invalid credit hours.");
             return;
-        } else if (!checkValidityCreditsEnroll(status, credits))
-            return;
+        }
 
-        EnrollStudent student = new EnrollStudent(lname, fname, d, credits);
-        enrollment.add(student);
-        System.out.println(student.toString());
+        EnrollStudent enroll_student = new EnrollStudent(lname, fname, d, credits);
+        enrollment.add(enroll_student);
+        System.out.println(enroll_student);
     }
 
     private void dropEnroll(String fname, String lname, String date) {
-        if (checkDateValid(date) < 0) {
+        if (!checkDateValid(date)) {
             return;
         }
 
         Date d = new Date(date);
-        EnrollStudent student = new EnrollStudent(fname, lname, d, 0);
+        EnrollStudent student = new EnrollStudent(lname, fname, d, 0);
 
         if (enrollment.getStudent(student) == null) {
             System.out.println(student.getProfile().toString() + " is not enrolled.");
@@ -605,18 +637,13 @@ public class TuitionManager {
     }
 
     private void awardScholarship(String fname, String lname, String date, String scholarship) {
-        int date_valid = checkDateValid(date);
-        int scholarship_valid = checkCreditsValid(scholarship);
 
-        if (date_valid == -1) {
-            System.out.println("DOB invalid: " + date + " not a valid calendar date!");
-        } else if (date_valid == -2) {
-            System.out.println("DOB invalid: " + date + " younger than 16 years old.");
-        } else if (scholarship_valid == -1) {
-            System.out.println("Amount is not an integer");
+        if (!checkDateValid(date)) {
+            return;
         }
 
-        if (date_valid < 0 || scholarship_valid < 0) {
+        if (checkIntValid(scholarship) < 0) {
+            System.out.println("Amount is not an integer.");
             return;
         }
 
@@ -624,7 +651,7 @@ public class TuitionManager {
         int scholarship_value = Integer.parseInt(scholarship);
 
         if (scholarship_value < 1 || scholarship_value > 10000) {
-            System.out.println(Integer.toString(scholarship_value) + ": invalid amount.");
+            System.out.println(scholarship_value + ": invalid amount.");
             return;
         }
 
@@ -632,13 +659,13 @@ public class TuitionManager {
         EnrollStudent student_enroll = enrollment.getStudent(new EnrollStudent(lname, fname, d, 0));
 
         if (student_enroll == null) {
-            System.out.println(fname + " " +  lname + " " +  date + " is not in the roster.");
+            System.out.println(student.getProfile().toString() + " is not in the roster.");
             return;
         } else if (student instanceof NonResident) {
-            System.out.println(fname + " " +  lname + " " +  date + " (" + student.getStatus() + ") is not eligible for the scholarship.");
+            System.out.println(student.getProfile().toString() + " (" + getStatus(student) + ") is not eligible for the scholarship.");
             return;
         } else if (student_enroll.getCredits() < 12) {
-            System.out.println(fname + " " +  lname + " " +  date + " part time student is not eligible for the scholarship.");
+            System.out.println(student.getProfile().toString() + " part time student is not eligible for the scholarship.");
             return;
         }
 
@@ -666,9 +693,9 @@ public class TuitionManager {
         for (int i = 0; i < enrollment.getSize(); i++) {
             Student student = roster.getStudent(new Resident(students[i].getProfile(), Major.CS, 0));
             if (student != null) {
-                    DecimalFormat formatter = new DecimalFormat("#,###.00");
-                String tution = formatter.format(student.tuitionDue(students[i].getCredits()));
-                System.out.println(student.getProfile().toString() + " (" + student.getStatus() + ") enrolled " + students[i].getCredits() + " credits: tuition due: $" + tution);
+                DecimalFormat formatter = new DecimalFormat("###,###.00");
+                String tuition = formatter.format(student.tuitionDue(students[i].getCredits()));
+                System.out.println(student.getProfile().toString() + " (" + getStatus(student) + ") enrolled " + students[i].getCredits() + " credits: tuition due: $" + tuition);
             }
         }
 
@@ -687,7 +714,7 @@ public class TuitionManager {
                 student.setCreditCompleted(students[i].getCredits() + student.getCreditCompleted());
 
                 if (student.getCreditCompleted() >= 120) {
-                    System.out.printf(student.toString() + "\n");
+                    System.out.printf(student + "\n");
                 }
             }
         }

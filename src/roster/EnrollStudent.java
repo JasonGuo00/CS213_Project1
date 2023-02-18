@@ -9,6 +9,18 @@ public class EnrollStudent  {
         this.creditsEnrolled = creditsEnrolled;
     }
 
+    public void setCredits(int credits) {
+        creditsEnrolled = credits;
+    }
+
+    public int getCredits() {
+        return creditsEnrolled;
+    }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
     @Override
     public String toString() {
         return profile.toString() + " enrolled " + creditsEnrolled + " credits";
@@ -21,17 +33,5 @@ public class EnrollStudent  {
             return profile.equals(student.profile);
         }
         return false;
-    }
-
-    public void setCredits(int credits) {
-        creditsEnrolled = credits;
-    }
-
-    public int getCredits() {
-        return creditsEnrolled;
-    }
-
-    public Profile getProfile() {
-        return profile;
     }
 }

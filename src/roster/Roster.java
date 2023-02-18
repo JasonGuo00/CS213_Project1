@@ -267,23 +267,11 @@ public class Roster {
         }
     }
 
-    public int checkStatus (Profile prof) {
-        Resident check = new Resident(prof, Major.CS, 0);
-
+    public int checkValid(Student student, int credits) {
         for (int i = 0; i < size; i++) {
-            if (check.compareTo(roster[i]) == 0) {
-                if (roster[i] instanceof Resident) {
+            if (student.compareTo(roster[i]) == 0) {
+                if (roster[i].isValid(credits)) {
                     return 0;
-                } else if (roster[i] instanceof TriState) {
-                    return 2;
-                } else if (roster[i] instanceof International) {
-                    if (((International)roster[i]).isStudyAbroad()) {
-                        return 3;
-                    } else {
-                        return 4;
-                    }
-                } else if (roster[i] instanceof NonResident) {
-                    return 1;
                 } else {
                     return -1;
                 }

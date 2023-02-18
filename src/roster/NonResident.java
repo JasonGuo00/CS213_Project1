@@ -5,19 +5,6 @@ public class NonResident extends Student {
         super(profile, major, creditCompleted);
     }
 
-    @Override
-    public double tuitionDue(int creditsEnrolled) {
-        if(creditsEnrolled >= Constants.FULL_TIME_CREDITS) {
-            return fullTime(creditsEnrolled);
-        }
-        return partTime(creditsEnrolled);
-    }
-
-    @Override
-    public boolean isResident() {
-        return false;
-    }
-
     private double partTime(int creditsEnrolled) {
         double total = Constants.PART_UNI_FEES;
         total += (Constants.NRES_CPH * creditsEnrolled);
@@ -33,8 +20,16 @@ public class NonResident extends Student {
     }
 
     @Override
-    public String getStatus() {
-        return "Resident";
+    public double tuitionDue(int creditsEnrolled) {
+        if(creditsEnrolled >= Constants.FULL_TIME_CREDITS) {
+            return fullTime(creditsEnrolled);
+        }
+        return partTime(creditsEnrolled);
+    }
+
+    @Override
+    public boolean isResident() {
+        return false;
     }
 
     /**

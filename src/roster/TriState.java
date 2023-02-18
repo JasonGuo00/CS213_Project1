@@ -7,6 +7,10 @@ public class TriState extends NonResident{
         this.state = state;
     }
 
+    public String getState() {
+        return state;
+    }
+
     @Override
     public double tuitionDue(int creditsEnrolled) {
         if(creditsEnrolled >= Constants.FULL_TIME_CREDITS) {
@@ -37,11 +41,6 @@ public class TriState extends NonResident{
             total -= Constants.CT_DISCOUNT;
         }
         return total;
-    }
-
-    @Override
-    public String getStatus() {
-        return "Tri-state " + state;
     }
 
     /**

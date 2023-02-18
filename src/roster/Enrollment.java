@@ -9,6 +9,23 @@ public class Enrollment {
         size = 0;
     }
 
+    public EnrollStudent[] getEnrollStudents() {
+        return enrollStudents;
+    }
+
+    public EnrollStudent getStudent(EnrollStudent student) {
+        for (int i = 0; i < size; i++) {
+            if (student.equals(enrollStudents[i])) {
+                return enrollStudents[i];
+            }
+        }
+        return null;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
     private int find(EnrollStudent student) {
         for (int i = 0; i < size; i++) {
             if (student.equals(enrollStudents[i])) {
@@ -58,22 +75,5 @@ public class Enrollment {
         for(int i = 0; i < size; i++) {
             System.out.println(enrollStudents[i].toString());
         }
-    }
-
-    public EnrollStudent[] getEnrollStudents() {
-        return enrollStudents;
-    }
-
-    public EnrollStudent getStudent(EnrollStudent student) {
-        for (int i = 0; i < size; i++) {
-            if (student.equals(enrollStudents[i])) {
-                return enrollStudents[i];
-            }
-        }
-        return null;
-    }
-
-    public int getSize() {
-        return size;
     }
 }

@@ -35,8 +35,6 @@ public abstract class Student implements Comparable<Student>{
     public abstract double tuitionDue(int creditsEnrolled);
     public abstract boolean isResident();
 
-    public abstract String getStatus();
-
     /**
      * Getter for the student's profile.
      * @return Returns the profile (Profile) of the student

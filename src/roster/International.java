@@ -7,6 +7,16 @@ public class International extends NonResident {
         this.isStudyAbroad = isStudyAbroad;
     }
 
+    private double fullTime(int creditsEnrolled) {
+        double total = Constants.FULL_UNI_FEES;
+        total += Constants.NRES_FULL_TUITION;
+        total += Constants.INTER_HEALTH_FEES;
+        if(creditsEnrolled > Constants.STD_CREDITS) {
+            total += ((creditsEnrolled - Constants.STD_CREDITS) * Constants.NRES_CPH);
+        }
+        return total;
+    }
+
     @Override
     public double tuitionDue(int creditsEnrolled) {
         if(isStudyAbroad) {
@@ -16,15 +26,6 @@ public class International extends NonResident {
             return fullTime(creditsEnrolled);
         }
         return -1;
-    }
-    private double fullTime(int creditsEnrolled) {
-        double total = Constants.FULL_UNI_FEES;
-        total += Constants.NRES_FULL_TUITION;
-        total += Constants.INTER_HEALTH_FEES;
-        if(creditsEnrolled > Constants.STD_CREDITS) {
-            total += ((creditsEnrolled - Constants.STD_CREDITS) * Constants.NRES_CPH);
-        }
-        return total;
     }
 
     @Override
@@ -43,15 +44,6 @@ public class International extends NonResident {
 
     public boolean isStudyAbroad() {
         return isStudyAbroad;
-    }
-
-    @Override
-    public String getStatus() {
-        if (isStudyAbroad) {
-            return "International studentstudy abroad";
-        } else {
-            return "International student";
-        }
     }
 
     /**
