@@ -73,6 +73,9 @@ public class Constants {
     public static final int SCHOLARSHIP_MIN = 1;
     public static final int SCHOLARSHIP_MAX = 10000;
     public static final int GRADUATION_CREDITS = 120;
+    public static final int POS_INT = 0;
+    public static final int NEG_INT = -2;
+    public static final int NOT_INT = -1;
 
 
 }

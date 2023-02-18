@@ -26,7 +26,7 @@ public class TuitionManager {
         enrollment = new Enrollment();
         Scanner obj = new Scanner(System.in);
         boolean stop = false;
-        System.out.println("Roster Manager running...");
+        System.out.println("Tuition Manager running...");
         while (!stop) {
             String line = obj.nextLine();
             if (!line.isEmpty()) {
@@ -74,6 +74,10 @@ public class TuitionManager {
         }
     }
 
+    /**
+     * Processes A commands, separating arguments and passing them to the correct function
+     * @param tokens StringTokenizer object holding an input line
+     */
     void processA(StringTokenizer tokens) {
         if (tokens.countTokens() == Constants.ARGUMENTS_AR) {
             String token1 = tokens.nextToken();
@@ -101,6 +105,10 @@ public class TuitionManager {
         }
     }
 
+    /**
+     * Processes AR command: checks the number of arguments is valid and runs the corresponding add() method.
+     * @param tokens StringTokenizer object holding an input line.
+     */
     void processAR(StringTokenizer tokens) {
         if (tokens.countTokens() == Constants.ARGUMENTS_AR) {
             addR(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), true);
@@ -111,6 +119,10 @@ public class TuitionManager {
         }
     }
 
+    /**
+     * Processes AN command: checks the number of arguments is valid and runs the corresponding add() method.
+     * @param tokens StringTokenizer object holding an input line.
+     */
     void processAN(StringTokenizer tokens) {
         if (tokens.countTokens() == Constants.ARGUMENTS_AN) {
             addN(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), true);
@@ -121,6 +133,10 @@ public class TuitionManager {
         }
     }
 
+    /**
+     * Processes AT command: checks the number of arguments is valid and runs the corresponding add() method.
+     * @param tokens StringTokenizer object holding an input line.
+     */
     void processAT(StringTokenizer tokens) {
         if (tokens.countTokens() == 6) {
             addT(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), true);
@@ -133,6 +149,10 @@ public class TuitionManager {
         }
     }
 
+    /**
+     * Processes AI command: checks the number of arguments is valid and runs the corresponding add() method.
+     * @param tokens StringTokenizer object holding an input line.
+     */
     void processAI(StringTokenizer tokens) {
         if (tokens.countTokens() == Constants.ARGUMENTS_AI_NO_ABROAD) {
             addI(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), "false", true);
@@ -145,6 +165,10 @@ public class TuitionManager {
         }
     }
 
+    /**
+     * Processes R command: checks the number of arguments is valid and runs the remove() method.
+     * @param tokens StringTokenizer object holding an input line.
+     */
     void processR(StringTokenizer tokens) {
         if (tokens.countTokens() == Constants.ARGUMENTS_R) {
             remove(tokens.nextToken(), tokens.nextToken(), tokens.nextToken());
@@ -153,6 +177,9 @@ public class TuitionManager {
         }
     }
 
+    /**
+     * Processes P command: checks the number of arguments is valid and runs the corresponding print() method.
+     */
     void processP() {
         if (roster.getSize() == 0) {
             System.out.println("Student roster is empty!");
@@ -161,6 +188,9 @@ public class TuitionManager {
         }
     }
 
+    /**
+     * Processes PS command: checks the number of arguments is valid and runs the corresponding print() method.
+     */
     void processPS() {
         if (roster.getSize() == 0) {
             System.out.println("Student roster is empty!");
@@ -169,6 +199,9 @@ public class TuitionManager {
         }
     }
 
+    /**
+     * Processes PC command: checks the number of arguments is valid and runs the corresponding print() method.
+     */
     void processPC() {
         if (roster.getSize() == 0) {
             System.out.println("Student roster is empty!");
@@ -177,6 +210,9 @@ public class TuitionManager {
         }
     }
 
+    /**
+     * Processes L command: checks the number of arguments is valid and runs the list() method.
+     */
     void processL(StringTokenizer tokens) {
         if (tokens.countTokens() == Constants.ARGUMENTS_L) {
             if (roster.getSize() == 0) {
@@ -189,6 +225,9 @@ public class TuitionManager {
         }
     }
 
+    /**
+     * Processes C command: checks the number of arguments is valid and runs the change() method.
+     */
     void processC(StringTokenizer tokens) {
         if (tokens.countTokens() == Constants.ARGUMENTS_C) {
             change(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken());
@@ -197,6 +236,9 @@ public class TuitionManager {
         }
     }
 
+    /**
+     * Processes LS command: checks the number of arguments is valid and runs the addList() method.
+     */
     void processLS(StringTokenizer tokens) {
         if (tokens.countTokens() == Constants.ARGUMENTS_LS) {
             addList(tokens.nextToken());
@@ -205,6 +247,9 @@ public class TuitionManager {
         }
     }
 
+    /**
+     * Processes E command: checks the number of arguments is valid and runs the enroll() method.
+     */
     void processE(StringTokenizer tokens) {
         if (tokens.countTokens() == Constants.ARGUMENTS_E) {
             enroll(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken());
@@ -215,6 +260,9 @@ public class TuitionManager {
         }
     }
 
+    /**
+     * Processes D command: checks the number of arguments is valid and runs the dropEnroll() method.
+     */
     void processD(StringTokenizer tokens) {
         if (tokens.countTokens() == Constants.ARGUMENTS_D) {
             dropEnroll(tokens.nextToken(), tokens.nextToken(), tokens.nextToken());
@@ -223,6 +271,9 @@ public class TuitionManager {
         }
     }
 
+    /**
+     * Processes S command: checks the number of arguments is valid and runs the awardScholarship() method.
+     */
     void processS(StringTokenizer tokens) {
         if (tokens.countTokens() < Constants.ARGUMENTS_PROFILE) {
             System.out.println("Missing data in line command.");
@@ -255,6 +306,9 @@ public class TuitionManager {
         }
     }
 
+    /**
+     * Processes PE command: checks the number of arguments is valid and runs the printEnrollment() method.
+     */
     void processPE(StringTokenizer tokens) {
         if (tokens.countTokens() == Constants.ARGUMENTS_PE) {
             if (enrollment.getSize() == 0) {
@@ -267,6 +321,9 @@ public class TuitionManager {
         }
     }
 
+    /**
+     * Processes PT command: checks the number of arguments is valid and runs the printTuition() method.
+     */
     void processPT(StringTokenizer tokens) {
         if (tokens.countTokens() == Constants.ARGUMENTS_PT) {
             if (roster.getSize() == 0) {
@@ -279,6 +336,9 @@ public class TuitionManager {
         }
     }
 
+    /**
+     * Processes SE command: checks the number of arguments is valid and runs the semesterEnd() method.
+     */
     void processSE(StringTokenizer tokens) {
         if (tokens.countTokens() == Constants.ARGUMENTS_SE) {
             semesterEnd();
@@ -405,6 +465,11 @@ public class TuitionManager {
         }
     }
 
+    /**
+     * Reads a list of students along with their residence status.
+     * Adds said students into the roster using the add method that corresponds with their residence type.
+     * @param filename Name of the text file that contains the students.
+     */
     private void addList(String filename) {
         try {
             Scanner scanner = new Scanner(new File(filename));
@@ -545,6 +610,11 @@ public class TuitionManager {
         }
     }
 
+    /**
+     * Check whether the date is a valid calendar date, or whether the student is under 16.
+     * @param date Student's D.O.B.
+     * @return true if the date is a valid calendar date and student is 16 or older.  False otherwise
+     */
     private boolean checkDateValid(String date) {
         Date d = new Date(date);
 
@@ -559,23 +629,33 @@ public class TuitionManager {
         return true;
     }
 
+    /**
+     * Check whether a input string can be read as an integer, and whether that integer is positive or negative.
+     * @param i Input String.
+     * @return Whether the String is a readable integer: NOT_INT(-1), POS_INT(0), NEG_INT(-2)
+     */
     private int checkIntValid(String i) {
         if (!i.matches("-?[0-9]+")) {
-            return -1;
+            return Constants.NOT_INT;
         } else if (i.matches("-[0-9]+")) {
-            return -2;
+            return Constants.NEG_INT;
         }
 
-        return 0;
+        return Constants.POS_INT;
     }
 
+    /**
+     * Check if the creditsCompleted property of Students is satisfied (is a positive integer).
+     * @param i Input String representing the credits student has completed.
+     * @return true or false.
+     */
     private boolean checkCreditsCompletedValid(String i) {
         int credits_valid = checkIntValid(i);
 
-        if (credits_valid == -1) {
+        if (credits_valid == Constants.NOT_INT) {
             System.out.println("Credits completed invalid: not an integer!");
             return false;
-        } else if (credits_valid == -2) {
+        } else if (credits_valid == Constants.NEG_INT) {
             System.out.println("Credits completed invalid: cannot be negative!");
             return false;
         }
@@ -583,13 +663,18 @@ public class TuitionManager {
         return true;
     }
 
+    /**
+     * Check whether the credits enrolled by the student is a valid integer.
+     * @param i Input String representing the credits enrolled by a student.
+     * @return true or falses.
+     */
     private boolean checkCreditsEnrolledValid(String i) {
         int credits_valid = checkIntValid(i);
 
-        if (credits_valid == -1) {
+        if (credits_valid == Constants.NOT_INT) {
             System.out.println("Credits enrolled is not an integer.");
             return false;
-        } else if (credits_valid == -2) {
+        } else if (credits_valid == Constants.NEG_INT) {
             System.out.println("Credits enrolled cannot be negative.");
             return false;
         }
@@ -597,6 +682,11 @@ public class TuitionManager {
         return true;
     }
 
+    /**
+     * Check that the input major is a valid major.
+     * @param major String representing the student's chosen major.
+     * @return true or false.
+     */
     private boolean checkMajorValid(String major) {
         if (getMajor(major) == null) {
             System.out.println("Major code invalid: " + major);
@@ -606,6 +696,11 @@ public class TuitionManager {
         return true;
     }
 
+    /**
+     * Return the residence status of the student. (Residence, NonResidence, TriState, International (Abroad / Not Abroad))
+     * @param student The student whose status is being checked.
+     * @return String representing the student's residence status.
+     */
     public String getStatus(Student student) {
         if (student instanceof Resident) {
             return "Resident";
@@ -624,6 +719,14 @@ public class TuitionManager {
         }
     }
 
+    /**
+     * Enroll the student with the given name and D.O.B. with the number of credits inputted.
+     * Checks whether the input parameters are valid and the student exists in the roster before enrolling.
+     * @param fname First name of student.
+     * @param lname Last name of student.
+     * @param date D.O.B. of student.
+     * @param cr Number of credits student is enrolling in.
+     */
     private void enroll(String fname, String lname, String date, String cr) {
         if (!checkCreditsEnrolledValid(cr) || !checkDateValid(date)) {
             return;
@@ -649,6 +752,12 @@ public class TuitionManager {
         System.out.println(enroll_student);
     }
 
+    /**
+     * Drop target student's enrollment.
+     * @param fname First name of target student.
+     * @param lname Last name of target student.
+     * @param date D.O.B. of target student.
+     */
     private void dropEnroll(String fname, String lname, String date) {
         if (!checkDateValid(date)) {
             return;
@@ -666,6 +775,13 @@ public class TuitionManager {
         System.out.println(student.getProfile().toString() + " dropped.");
     }
 
+    /**
+     * Award a Resident student a specified amount of scholarships.
+     * @param fname First name of student.
+     * @param lname Last name of student.
+     * @param date D.O.B. of student.
+     * @param scholarship String representing the scholarship amount.
+     */
     private void awardScholarship(String fname, String lname, String date, String scholarship) {
 
         if (!checkDateValid(date)) {
@@ -703,6 +819,9 @@ public class TuitionManager {
         System.out.println(student.getProfile().toString() + ": scholarship amount updated.");
     }
 
+    /**
+     * Print the enrollment list.
+     */
     private void printEnrollment() {
         EnrollStudent[] students = enrollment.getEnrollStudents();
 
@@ -715,6 +834,9 @@ public class TuitionManager {
         System.out.println("* end of enrollment *");
     }
 
+    /**
+     * Print a list of enrolled students and their tuition due.
+     */
     private void printTuition() {
         EnrollStudent[] students = enrollment.getEnrollStudents();
 
@@ -732,6 +854,10 @@ public class TuitionManager {
         System.out.println("* end of tuition due *");
     }
 
+    /**
+     * For all enrolled students, add the amount of enrolled credits they have to their credits completed at the end
+     * of the semester.
+     */
     private void semesterEnd() {
         EnrollStudent[] students = enrollment.getEnrollStudents();
 

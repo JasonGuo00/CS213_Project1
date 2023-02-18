@@ -267,6 +267,12 @@ public class Roster {
         }
     }
 
+    /**
+     * Check if the target student is in the roster, and if so whether their credits enrolled is valid (between 3-24 inclusive).
+     * @param student Target student.
+     * @param credits The number of credits the student intends to enroll with.
+     * @return true or false.
+     */
     public boolean checkValid(Student student, int credits) {
         for (int i = 0; i < size; i++) {
             if (student.compareTo(roster[i]) == 0) {
@@ -281,6 +287,11 @@ public class Roster {
         return false;
     }
 
+    /**
+     * Obtain the target student from the roster list.
+     * @param student Target student.
+     * @return Instance of the student contained in the list, or null if not found.
+     */
     public Student getStudent(Student student) {
         for (int i = 0; i < size; i++) {
             if (student.equals(roster[i])) {
