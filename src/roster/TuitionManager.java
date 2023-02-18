@@ -75,7 +75,7 @@ public class TuitionManager {
     }
 
     void processA(StringTokenizer tokens) {
-        if (tokens.countTokens() == 5) {
+        if (tokens.countTokens() == Constants.ARGUMENTS_AR) {
             String token1 = tokens.nextToken();
             String token2 = tokens.nextToken();
             String token3 = tokens.nextToken();
@@ -83,7 +83,7 @@ public class TuitionManager {
             String token5 = tokens.nextToken();
 
             addR(token1, token2, token3, token4, token5, true);
-        } else if (tokens.countTokens() == 6) {
+        } else if (tokens.countTokens() == Constants.ARGUMENTS_AI_ABROAD) {
             String token1 = tokens.nextToken();
             String token2 = tokens.nextToken();
             String token3 = tokens.nextToken();
@@ -102,9 +102,9 @@ public class TuitionManager {
     }
 
     void processAR(StringTokenizer tokens) {
-        if (tokens.countTokens() == 5) {
+        if (tokens.countTokens() == Constants.ARGUMENTS_AR) {
             addR(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), true);
-        } else if (tokens.countTokens() < 5) {
+        } else if (tokens.countTokens() < Constants.ARGUMENTS_AR) {
             System.out.println("Missing data in line command.");
         } else {
             System.out.println("Invalid number of arguments.");
@@ -112,9 +112,9 @@ public class TuitionManager {
     }
 
     void processAN(StringTokenizer tokens) {
-        if (tokens.countTokens() == 5) {
+        if (tokens.countTokens() == Constants.ARGUMENTS_AN) {
             addN(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), true);
-        } else if (tokens.countTokens() < 5) {
+        } else if (tokens.countTokens() < Constants.ARGUMENTS_AN) {
             System.out.println("Missing data in line command.");
         } else {
             System.out.println("Invalid number of arguments.");
@@ -134,11 +134,11 @@ public class TuitionManager {
     }
 
     void processAI(StringTokenizer tokens) {
-        if (tokens.countTokens() == 5) {
+        if (tokens.countTokens() == Constants.ARGUMENTS_AI_NO_ABROAD) {
             addI(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), "false", true);
-        } else if (tokens.countTokens() == 6) {
+        } else if (tokens.countTokens() == Constants.ARGUMENTS_AI_ABROAD) {
             addI(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), true);
-        } else if (tokens.countTokens() < 5) {
+        } else if (tokens.countTokens() < Constants.ARGUMENTS_AI_NO_ABROAD) {
             System.out.println("Missing data in line command.");
         } else {
             System.out.println("Invalid number of arguments.");
@@ -198,7 +198,7 @@ public class TuitionManager {
     }
 
     void processLS(StringTokenizer tokens) {
-        if (tokens.countTokens() == 1) {
+        if (tokens.countTokens() == Constants.ARGUMENTS_LS) {
             addList(tokens.nextToken());
         } else {
             System.out.println("Invalid number of arguments.");
@@ -206,9 +206,9 @@ public class TuitionManager {
     }
 
     void processE(StringTokenizer tokens) {
-        if (tokens.countTokens() == 4) {
+        if (tokens.countTokens() == Constants.ARGUMENTS_E) {
             enroll(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken());
-        } else if (tokens.countTokens() < 4) {
+        } else if (tokens.countTokens() < Constants.ARGUMENTS_E) {
             System.out.println("Missing data in line command.");
         } else {
             System.out.println("Invalid number of arguments.");
@@ -216,7 +216,7 @@ public class TuitionManager {
     }
 
     void processD(StringTokenizer tokens) {
-        if (tokens.countTokens() == 3) {
+        if (tokens.countTokens() == Constants.ARGUMENTS_D) {
             dropEnroll(tokens.nextToken(), tokens.nextToken(), tokens.nextToken());
         } else {
             System.out.println("Invalid number of arguments.");
@@ -224,7 +224,7 @@ public class TuitionManager {
     }
 
     void processS(StringTokenizer tokens) {
-        if (tokens.countTokens() < 3) {
+        if (tokens.countTokens() < Constants.ARGUMENTS_PROFILE) {
             System.out.println("Missing data in line command.");
         } else {
             String fname = tokens.nextToken();
@@ -245,9 +245,9 @@ public class TuitionManager {
                 return;
             }
 
-            if (tokens.countTokens() == 1) {
+            if (tokens.countTokens() == Constants.ARGUMENTS_S - Constants.ARGUMENTS_PROFILE) {
                 awardScholarship(fname, lname, date, tokens.nextToken());
-            } else if (tokens.countTokens() < 1) {
+            } else if (tokens.countTokens() < Constants.ARGUMENTS_S - Constants.ARGUMENTS_PROFILE) {
                 System.out.println("Missing data in line command.");
             } else {
                 System.out.println("Invalid number of arguments.");
@@ -256,7 +256,7 @@ public class TuitionManager {
     }
 
     void processPE(StringTokenizer tokens) {
-        if (tokens.countTokens() == 0) {
+        if (tokens.countTokens() == Constants.ARGUMENTS_PE) {
             if (enrollment.getSize() == 0) {
                 System.out.println("Enrollment is empty!");
             } else {
@@ -268,7 +268,7 @@ public class TuitionManager {
     }
 
     void processPT(StringTokenizer tokens) {
-        if (tokens.countTokens() == 0) {
+        if (tokens.countTokens() == Constants.ARGUMENTS_PT) {
             if (roster.getSize() == 0) {
                 System.out.println("Student roster is empty!");
             } else {
@@ -280,7 +280,7 @@ public class TuitionManager {
     }
 
     void processSE(StringTokenizer tokens) {
-        if (tokens.countTokens() == 0) {
+        if (tokens.countTokens() == Constants.ARGUMENTS_SE) {
             semesterEnd();
         } else {
             System.out.println("Invalid number of arguments.");
@@ -420,9 +420,9 @@ public class TuitionManager {
                     case "T" ->
                         addT(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), false);
                     case "I" -> {
-                        if (tokens.countTokens() == 5) {
+                        if (tokens.countTokens() == Constants.ARGUMENTS_AI_NO_ABROAD) {
                             addI(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), "false", false);
-                        } else if (tokens.countTokens() == 6) {
+                        } else if (tokens.countTokens() == Constants.ARGUMENTS_AI_ABROAD) {
                             addI(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), false);
                         }
                     }
@@ -509,7 +509,7 @@ public class TuitionManager {
         }
         else {
             Student s = new Resident(new Profile(lname, fname, new Date(date)), getMajor(major), 0);
-            if(roster.changeMajor(s, getMajor(major)) != Constants.NOT_FOUND) {
+            if(roster.changeMajor(s, getMajor(major))) {
                 System.out.println(fname + " " + lname + " " + date + " major changed to " + major);
             }
             else {
@@ -639,9 +639,7 @@ public class TuitionManager {
             return;
         }
 
-        int status = roster.checkValid(student, credits);
-
-        if (status == -1) {
+        if (!roster.checkValid(student, credits)) {
             System.out.println("(" + getStatus(student) + ") " + credits + ": invalid credit hours.");
             return;
         }
@@ -682,7 +680,7 @@ public class TuitionManager {
         Date d = new Date(date);
         int scholarship_value = Integer.parseInt(scholarship);
 
-        if (scholarship_value < 1 || scholarship_value > 10000) {
+        if (scholarship_value < Constants.SCHOLARSHIP_MIN || scholarship_value > Constants.SCHOLARSHIP_MAX) {
             System.out.println(scholarship_value + ": invalid amount.");
             return;
         }
@@ -745,7 +743,7 @@ public class TuitionManager {
             if (student != null) {
                 student.setCreditCompleted(students[i].getCredits() + student.getCreditCompleted());
 
-                if (student.getCreditCompleted() >= 120) {
+                if (student.getCreditCompleted() >= Constants.GRADUATION_CREDITS) {
                     System.out.printf(student + "\n");
                 }
             }

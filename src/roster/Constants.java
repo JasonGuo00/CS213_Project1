@@ -58,6 +58,21 @@ public class Constants {
     public static final int INTER_HEALTH_FEES = 2650;
     public static final int NY_DISCOUNT = 4000;
     public static final int CT_DISCOUNT = 5000;
+    public static final int ARGUMENTS_AR = 5;
+    public static final int ARGUMENTS_AN = 5;
+    public static final int ARGUMENTS_AI_NO_ABROAD = 5;
+    public static final int ARGUMENTS_AI_ABROAD = 6;
+    public static final int ARGUMENTS_LS = 1;
+    public static final int ARGUMENTS_E = 4;
+    public static final int ARGUMENTS_D = 3;
+    public static final int ARGUMENTS_PROFILE = 3;
+    public static final int ARGUMENTS_S = 4;
+    public static final int ARGUMENTS_PE = 0;
+    public static final int ARGUMENTS_PT = 0;
+    public static final int ARGUMENTS_SE = 0;
+    public static final int SCHOLARSHIP_MIN = 1;
+    public static final int SCHOLARSHIP_MAX = 10000;
+    public static final int GRADUATION_CREDITS = 120;
 
 
 }

@@ -254,31 +254,31 @@ public class Roster {
      * Searches for student object and changes its major
      * @param student Student object to search for
      * @param major Major object to set student's to
-     * @return Returns 1 if successful, and -1 if unsuccessful and student was not found
+     * @return Returns true if successful, and false if unsuccessful and student was not found
      */
-    public int changeMajor(Student student, Major major) {
+    public boolean changeMajor(Student student, Major major) {
         int target = find(student);
         if(target == Constants.NOT_FOUND) {
-            return Constants.NOT_FOUND;
+            return false;
         }
         else {
             roster[target].setMajor(major);
-            return 1;
+            return true;
         }
     }
 
-    public int checkValid(Student student, int credits) {
+    public boolean checkValid(Student student, int credits) {
         for (int i = 0; i < size; i++) {
             if (student.compareTo(roster[i]) == 0) {
                 if (roster[i].isValid(credits)) {
-                    return 0;
+                    return true;
                 } else {
-                    return -1;
+                    return false;
                 }
             }
         }
 
-        return -1;
+        return false;
     }
 
     public Student getStudent(Student student) {
