@@ -52,179 +52,238 @@ public class TuitionManager {
      */
     private void interpreter(String input, StringTokenizer tokens) {
         switch (input) {
-            case "A" -> {
-                findStatus(tokens);
-            }
-            case "AR" -> {
-                if (tokens.countTokens() == 5) {
-                    addR(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), true);
-                } else if (tokens.countTokens() < 5) {
-                    System.out.println("Missing data in line command.");
-                } else {
-                    System.out.println("Invalid number of arguments.");
-                }
-            }
-            case "AN" -> {
-                if (tokens.countTokens() == 5) {
-                    addN(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), true);
-                } else if (tokens.countTokens() < 5) {
-                    System.out.println("Missing data in line command.");
-                } else {
-                    System.out.println("Invalid number of arguments.");
-                }
-            }
-            case "AT" -> {
-                if (tokens.countTokens() == 6) {
-                    addT(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), true);
-                } else if (tokens.countTokens() == 5) {
-                    System.out.println("Missing the state code.");
-                } else if (tokens.countTokens() == 3) {
-                    System.out.println("Missing data in command line.");
-                } else {
-                    System.out.println("Missing data in line command.");
-                }
-            }
-            case "AI" -> {
-                if (tokens.countTokens() == 5) {
-                    addI(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), "false", true);
-                } else if (tokens.countTokens() == 6) {
-                    addI(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), true);
-                } else if (tokens.countTokens() < 5) {
-                    System.out.println("Missing data in line command.");
-                } else {
-                    System.out.println("Invalid number of arguments.");
-                }
-            }
-            case "R" -> {
-                if (tokens.countTokens() == Constants.ARGUMENTS_R) {
-                    remove(tokens.nextToken(), tokens.nextToken(), tokens.nextToken());
-                } else {
-                    System.out.println("Invalid number of arguments.");
-                }
-            }
-            case "P" -> {
-                if (roster.getSize() == 0) {
-                    System.out.println("Student roster is empty!");
-                } else {
-                    pname();
-                }
-            }
-            case "PS" -> {
-                if (roster.getSize() == 0) {
-                    System.out.println("Student roster is empty!");
-                } else {
-                    pstanding();
-                }
-            }
-            case "PC" -> {
-                if (roster.getSize() == 0) {
-                    System.out.println("Student roster is empty!");
-                } else {
-                    pschool();
-                }
-            }
-            case "L" -> {
-                if (tokens.countTokens() == Constants.ARGUMENTS_L) {
-                    if (roster.getSize() == 0) {
-                        System.out.println("Student roster is empty!");
-                    } else {
-                        list(tokens.nextToken());
-                    }
-                } else {
-                    System.out.println("Invalid number of arguments.");
-                }
-            }
-            case "C" -> {
-                if (tokens.countTokens() == Constants.ARGUMENTS_C) {
-                    change(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken());
-                } else {
-                    System.out.println("Invalid number of arguments.");
-                }
-            }
-            case "LS" -> {
-                if (tokens.countTokens() == 1) {
-                    addList(tokens.nextToken());
-                } else {
-                    System.out.println("Invalid number of arguments.");
-                }
-            }
-            case "E" -> {
-                if (tokens.countTokens() == 4) {
-                    enroll(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken());
-                } else if (tokens.countTokens() < 4) {
-                    System.out.println("Missing data in line command.");
-                } else {
-                    System.out.println("Invalid number of arguments.");
-                }
-            }
-            case "D" -> {
-                if (tokens.countTokens() == 3) {
-                    dropEnroll(tokens.nextToken(), tokens.nextToken(), tokens.nextToken());
-                } else {
-                    System.out.println("Invalid number of arguments.");
-                }
-            }
-            case "S" -> {
-                if (tokens.countTokens() < 3) {
-                    System.out.println("Missing data in line command.");
-                } else {
-                    String fname = tokens.nextToken();
-                    String lname = tokens.nextToken();
-                    String date = tokens.nextToken();
-
-
-                    if (!checkDateValid(date)) {
-                        return;
-                    }
-
-                    Date d = new Date(date);
-                    Profile profile = new Profile(lname, fname, d);
-                    Student student = roster.getStudent(new Resident(profile, Major.CS, 0));
-
-                    if (student == null) {
-                        System.out.println(profile.toString() + " is not in the roster.");
-                        return;
-                    }
-
-                    if (tokens.countTokens() == 1) {
-                        awardScholarship(fname, lname, date, tokens.nextToken());
-                    } else if (tokens.countTokens() < 1) {
-                        System.out.println("Missing data in line command.");
-                    } else {
-                        System.out.println("Invalid number of arguments.");
-                    }
-                }
-            }
-            case "PE" -> {
-                if (tokens.countTokens() == 0) {
-                    if (enrollment.getSize() == 0) {
-                        System.out.println("Enrollment is empty!");
-                    } else {
-                        printEnrollment();
-                    }
-                } else {
-                    System.out.println("Invalid number of arguments.");
-                }
-            }
-            case "PT" -> {
-                if (tokens.countTokens() == 0) {
-                    if (roster.getSize() == 0) {
-                        System.out.println("Student roster is empty!");
-                    } else {
-                        printTuition();
-                    }
-                } else {
-                    System.out.println("Invalid number of arguments.");
-                }
-            }
-            case "SE" -> {
-                if (tokens.countTokens() == 0) {
-                    semesterEnd();
-                } else {
-                    System.out.println("Invalid number of arguments.");
-                }
-            }
+            case "A" -> processA(tokens);
+            case "AR" -> processAR(tokens);
+            case "AN" -> processAN(tokens);
+            case "AT" -> processAT(tokens);
+            case "AI" -> processAI(tokens);
+            case "R" -> processR(tokens);
+            case "P" -> processP();
+            case "PS" -> processPS();
+            case "PC" -> processPC();
+            case "L" -> processL(tokens);
+            case "C" -> processC(tokens);
+            case "LS" -> processLS(tokens);
+            case "E" -> processE(tokens);
+            case "D" -> processD(tokens);
+            case "S" -> processS(tokens);
+            case "PE" -> processPE(tokens);
+            case "PT" -> processPT(tokens);
+            case "SE" -> processSE(tokens);
             default -> System.out.println(input + " is an invalid command!");
+        }
+    }
+
+    void processA(StringTokenizer tokens) {
+        if (tokens.countTokens() == 5) {
+            String token1 = tokens.nextToken();
+            String token2 = tokens.nextToken();
+            String token3 = tokens.nextToken();
+            String token4 = tokens.nextToken();
+            String token5 = tokens.nextToken();
+
+            addR(token1, token2, token3, token4, token5, true);
+        } else if (tokens.countTokens() == 6) {
+            String token1 = tokens.nextToken();
+            String token2 = tokens.nextToken();
+            String token3 = tokens.nextToken();
+            String token4 = tokens.nextToken();
+            String token5 = tokens.nextToken();
+            String token6 = tokens.nextToken();
+
+            if (token6.equalsIgnoreCase("true") || token6.equalsIgnoreCase("false")) {
+                addI(token1, token2, token3, token4, token5, token6, true);
+            } else {
+                addT(token1, token2, token3, token4, token5, token6, true);
+            }
+        } else {
+            System.out.println("Invalid number of arguments.");
+        }
+    }
+
+    void processAR(StringTokenizer tokens) {
+        if (tokens.countTokens() == 5) {
+            addR(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), true);
+        } else if (tokens.countTokens() < 5) {
+            System.out.println("Missing data in line command.");
+        } else {
+            System.out.println("Invalid number of arguments.");
+        }
+    }
+
+    void processAN(StringTokenizer tokens) {
+        if (tokens.countTokens() == 5) {
+            addN(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), true);
+        } else if (tokens.countTokens() < 5) {
+            System.out.println("Missing data in line command.");
+        } else {
+            System.out.println("Invalid number of arguments.");
+        }
+    }
+
+    void processAT(StringTokenizer tokens) {
+        if (tokens.countTokens() == 6) {
+            addT(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), true);
+        } else if (tokens.countTokens() == 5) {
+            System.out.println("Missing the state code.");
+        } else if (tokens.countTokens() == 3) {
+            System.out.println("Missing data in command line.");
+        } else {
+            System.out.println("Missing data in line command.");
+        }
+    }
+
+    void processAI(StringTokenizer tokens) {
+        if (tokens.countTokens() == 5) {
+            addI(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), "false", true);
+        } else if (tokens.countTokens() == 6) {
+            addI(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), true);
+        } else if (tokens.countTokens() < 5) {
+            System.out.println("Missing data in line command.");
+        } else {
+            System.out.println("Invalid number of arguments.");
+        }
+    }
+
+    void processR(StringTokenizer tokens) {
+        if (tokens.countTokens() == Constants.ARGUMENTS_R) {
+            remove(tokens.nextToken(), tokens.nextToken(), tokens.nextToken());
+        } else {
+            System.out.println("Invalid number of arguments.");
+        }
+    }
+
+    void processP() {
+        if (roster.getSize() == 0) {
+            System.out.println("Student roster is empty!");
+        } else {
+            pname();
+        }
+    }
+
+    void processPS() {
+        if (roster.getSize() == 0) {
+            System.out.println("Student roster is empty!");
+        } else {
+            pstanding();
+        }
+    }
+
+    void processPC() {
+        if (roster.getSize() == 0) {
+            System.out.println("Student roster is empty!");
+        } else {
+            pschool();
+        }
+    }
+
+    void processL(StringTokenizer tokens) {
+        if (tokens.countTokens() == Constants.ARGUMENTS_L) {
+            if (roster.getSize() == 0) {
+                System.out.println("Student roster is empty!");
+            } else {
+                list(tokens.nextToken());
+            }
+        } else {
+            System.out.println("Invalid number of arguments.");
+        }
+    }
+
+    void processC(StringTokenizer tokens) {
+        if (tokens.countTokens() == Constants.ARGUMENTS_C) {
+            change(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken());
+        } else {
+            System.out.println("Invalid number of arguments.");
+        }
+    }
+
+    void processLS(StringTokenizer tokens) {
+        if (tokens.countTokens() == 1) {
+            addList(tokens.nextToken());
+        } else {
+            System.out.println("Invalid number of arguments.");
+        }
+    }
+
+    void processE(StringTokenizer tokens) {
+        if (tokens.countTokens() == 4) {
+            enroll(tokens.nextToken(), tokens.nextToken(), tokens.nextToken(), tokens.nextToken());
+        } else if (tokens.countTokens() < 4) {
+            System.out.println("Missing data in line command.");
+        } else {
+            System.out.println("Invalid number of arguments.");
+        }
+    }
+
+    void processD(StringTokenizer tokens) {
+        if (tokens.countTokens() == 3) {
+            dropEnroll(tokens.nextToken(), tokens.nextToken(), tokens.nextToken());
+        } else {
+            System.out.println("Invalid number of arguments.");
+        }
+    }
+
+    void processS(StringTokenizer tokens) {
+        if (tokens.countTokens() < 3) {
+            System.out.println("Missing data in line command.");
+        } else {
+            String fname = tokens.nextToken();
+            String lname = tokens.nextToken();
+            String date = tokens.nextToken();
+
+
+            if (!checkDateValid(date)) {
+                return;
+            }
+
+            Date d = new Date(date);
+            Profile profile = new Profile(lname, fname, d);
+            Student student = roster.getStudent(new Resident(profile, Major.CS, 0));
+
+            if (student == null) {
+                System.out.println(profile + " is not in the roster.");
+                return;
+            }
+
+            if (tokens.countTokens() == 1) {
+                awardScholarship(fname, lname, date, tokens.nextToken());
+            } else if (tokens.countTokens() < 1) {
+                System.out.println("Missing data in line command.");
+            } else {
+                System.out.println("Invalid number of arguments.");
+            }
+        }
+    }
+
+    void processPE(StringTokenizer tokens) {
+        if (tokens.countTokens() == 0) {
+            if (enrollment.getSize() == 0) {
+                System.out.println("Enrollment is empty!");
+            } else {
+                printEnrollment();
+            }
+        } else {
+            System.out.println("Invalid number of arguments.");
+        }
+    }
+
+    void processPT(StringTokenizer tokens) {
+        if (tokens.countTokens() == 0) {
+            if (roster.getSize() == 0) {
+                System.out.println("Student roster is empty!");
+            } else {
+                printTuition();
+            }
+        } else {
+            System.out.println("Invalid number of arguments.");
+        }
+    }
+
+    void processSE(StringTokenizer tokens) {
+        if (tokens.countTokens() == 0) {
+            semesterEnd();
+        } else {
+            System.out.println("Invalid number of arguments.");
         }
     }
 
@@ -343,33 +402,6 @@ public class TuitionManager {
             } else if (print) {
                 System.out.println(fname + " " + lname + " " + date + " is already in the roster.");
             }
-        }
-    }
-
-    void findStatus(StringTokenizer tokens) {
-        if (tokens.countTokens() == 5) {
-            String token1 = tokens.nextToken();
-            String token2 = tokens.nextToken();
-            String token3 = tokens.nextToken();
-            String token4 = tokens.nextToken();
-            String token5 = tokens.nextToken();
-
-            addR(token1, token2, token3, token4, token5, true);
-        } else if (tokens.countTokens() == 6) {
-            String token1 = tokens.nextToken();
-            String token2 = tokens.nextToken();
-            String token3 = tokens.nextToken();
-            String token4 = tokens.nextToken();
-            String token5 = tokens.nextToken();
-            String token6 = tokens.nextToken();
-
-            if (token6.equalsIgnoreCase("true") || token6.equalsIgnoreCase("false")) {
-                addI(token1, token2, token3, token4, token5, token6, true);
-            } else {
-                addT(token1, token2, token3, token4, token5, token6, true);
-            }
-        } else {
-            System.out.println("Invalid number of arguments.");
         }
     }
 
@@ -603,7 +635,7 @@ public class TuitionManager {
         Student student = roster.getStudent(new Resident(profile, Major.CS, 0));
 
         if (student == null) {
-            System.out.println("Cannot enroll: " + profile.toString() + " is not in the roster.");
+            System.out.println("Cannot enroll: " + profile + " is not in the roster.");
             return;
         }
 
