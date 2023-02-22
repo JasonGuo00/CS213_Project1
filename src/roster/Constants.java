@@ -76,6 +76,10 @@ public class Constants {
     public static final int POS_INT = 0;
     public static final int NEG_INT = -2;
     public static final int NOT_INT = -1;
+    public static final int INTER_NOT_ABROAD = 0;
+    public static final int INTER_ABROAD = 1;
+    public static final int TRISTATE_NY = 2;
+    public static final int TRISTATE_CT = 3;
 
 
 }

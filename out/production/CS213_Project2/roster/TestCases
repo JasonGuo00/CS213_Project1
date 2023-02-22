@@ -1,0 +1,33 @@
+-----Test Cases for Data isValid() Method-----
+
+// The 5 test cases from Project1TestCases.txt
+Case 1: 2/29/2023 -> test if the 29th is valid on a non leap year               Expected Result: false
+Case 2: 4/31/2003 -> test if the 31st is valid in April                         Expected Result: false
+Case 3: 13/31/2003 -> test if an out of bounds month is valid                   Expected Result: false
+Case 4: 3/32/2003 -> test if an out of bounds day is valid                      Expected Result: false
+Case 5: -1/31/2003 -> test if a negative month is valid                         Expected Result: false
+
+// Other test cases
+Case 6: 2/29/2020 -> test if the 29th is valid on a leap year                   Expected Result: true
+Case 7: 7/31/1999 -> test if a past date on a month with 31 days is valid       Expected Result: true
+Case 8: new Date() -> test if the current date is valid                         Expected Result: true
+Case 9: 11/30/1989 -> test if a past date on a month with 30 days is valid      Expected Result: true
+Case 10: 12/1/2023 -> test if a future date is valid                             Expected Result: false
+Case 11: 3/-1/2004 -> test if a negative day is valid                           Expected Result: false
+Case 12: 8/18/-1 -> test if a negative year is valid                            Expected Result: false
+
+-----Test Cases for Student compareTo() Method-----
+// Cases will have default CS major and 0 credit completed because the only thing being compared are the student's profiles
+
+Case 1: (John Doe 1/14/2001) compareTo (Jane Doe 3/2/2002) -> test if compareTo compares first names if last names
+are the same                                    Expected Result: 1 (John Doe comes after Jane Doe)
+Case 2: (John Doe 4/1/1999) compareTo (John Doe 11/1/2002) -> test if compareTo compares the d.o.b if last and first names are
+the same                                        Expected Result: -1 (Older John Doe comes before younger John Doe)
+Case 3: (Robert Kim 12/14/2004) compareTo (John Zoo 1/2/2000) -> test if compareTo compares the last name before anything
+else                                            Expected Result: -1 (Kim should come before Zoo)
+Case 4: (John Doe 1/1/2000) compareTo (John Doe 1/1/2000) -> test if compareTo can detect two students that are the
+same                                            Expected Result = 0 (The two John Doe are the same)
+Case 5: (Allison Wong 6/12/2001) compareTo (Johnathan Wang 9/12/2004) -> test if compareTo properly compares lexicographically
+on last names with the same starting letter     Expected Result = 1 (Wo comes after Wa)
+Case 6: (Allison Wong 6/12/2001) compareTo (Alice Wong 9/12/2004) -> test if compareTo properly compare lexicographically on
+first names with the same starting letter(s)       Expected Result = 1 (All comes after Ali)

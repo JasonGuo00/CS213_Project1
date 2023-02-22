@@ -4,6 +4,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test for the tuitionDue() method for Internation students.
+ * @author Jason Guo, Russel Rivera
+ */
 public class InternationalTest {
 
     @Test

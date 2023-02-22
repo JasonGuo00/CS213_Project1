@@ -4,6 +4,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test for Roster's add() method
+ * @author Jason Guo, Russel Rivera
+ */
 public class RosterTest {
 
     @Test
@@ -33,23 +37,40 @@ public class RosterTest {
         assertFalse(roster.add(student));
     }
 
+    /**
+     * Create the student.
+     * @param profile Profile of the student.
+     * @param major Student's declared major.
+     * @param credits Credits the student has completed.
+     * @param id Value indicating the type of student.
+     * @param valid If the student is valid or not.
+     * @return International, TriState, or null.
+     */
     private Student makeStudent(Profile profile, Major major, int credits, int id, boolean valid) {
         if(!valid) {
             return null;
         }
         switch(id) {
-            case 0:
+            case Constants.INTER_NOT_ABROAD:
                 return new International(profile, major, credits, false);
-            case 1:
+            case Constants.INTER_ABROAD:
                 return new International(profile, major, credits, true);
-            case 2:
+            case Constants.TRISTATE_NY:
                 return new TriState(profile, major, credits, "NY");
-            case 3:
+            case Constants.TRISTATE_CT:
                 return new TriState(profile, major, credits, "CT");
             default:
                 return null;
         }
     }
+
+    /**
+     * Check that the parameters for the student is valid
+     * @param date Date of Birth of student.
+     * @param major Student's declared major.
+     * @param cr Credits the student has completed.
+     * @return true or false.
+     */
     private boolean checkValidity(String date, String major, String cr) {
         Date d = new Date(date);
         if (!d.isValid()) {return false;
@@ -59,6 +80,12 @@ public class RosterTest {
         } else if (getMajor(major) == null) {return false;
         }return true;
     }
+
+    /**
+     * Obtain the major enum based off of string.
+     * @param major Student's declared major.
+     * @return Corresponding major enum, or null.
+     */
     private Major getMajor(String major) {
         if(major.equalsIgnoreCase("CS")) {return Major.CS;}
         else if(major.equalsIgnoreCase("MATH")) {return Major.MATH;}
