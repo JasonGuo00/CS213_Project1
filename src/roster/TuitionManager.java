@@ -701,7 +701,7 @@ public class TuitionManager {
      * @param student The student whose status is being checked.
      * @return String representing the student's residence status.
      */
-    public String getStatus(Student student) {
+    private String getStatus(Student student) {
         if (student instanceof Resident) {
             return "Resident";
         } else if (student instanceof TriState) {
